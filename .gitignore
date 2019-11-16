@@ -1,0 +1,5 @@
+venv3.8.0/
+data/
+.idea/
+__pycache__/
+lines.html
