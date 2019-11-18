@@ -14,18 +14,39 @@ week trough, with Australian shares sinking 1.6 percent. Japan’s Nikkei dived 
 electric machinery makers and suppliers of Apple’s iphone parts. Sterling fell to $1.286 after three straight 
 sessions of losses took it to the lowest since Nov.1 as there were still considerable unresolved issues with the
 European Union over Brexit, British Prime Minister Theresa May said on Monday.'''
+
+import nltk
+from nltk import word_tokenize, pos_tag, ne_chunk
+from nltk.chunk import conlltags2tree, tree2conlltags
+from pprint import pprint
+
+nltk.download('words')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('punkt')
+nltk.download('maxent_ne_chunker')
+
+print('NTLK version: %s' % (nltk.__version__))
+
 def fn_preprocess(art):
     art = nltk.word_tokenize(art)
     art = nltk.pos_tag(art)
     return art
+
 art_processed = fn_preprocess(article)
 
-# parts of speech tags done
-print(art_processed)
-
-# Text chunking is also called as shallow parsing which typically follows POS tagging to add more structure to the sentence. The result is grouping of words in “chunks”.
-# So, lets perform chunking to our article which we have already POS tagged.
 results = ne_chunk(art_processed)
-for x in str(results).split('\n'):
-    if '/NN' in x:
-        print(x)
+
+# for x in str(results).split('\n'):
+#     if '/NN' in x:
+#         print(x)
+        
+pattern = 'NP: {<DT>?<JJ>*<NN>}'
+cp = nltk.RegexpParser(pattern)
+cs = cp.parse(art_processed)
+# print(cs)
+
+iob_tagged = tree2conlltags(cs)
+# pprint(iob_tagged)
+
+for word, pos, ner in iob_tagged:
+    print(word, pos, ner)
