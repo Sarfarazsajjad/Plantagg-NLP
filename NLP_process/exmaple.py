@@ -8,6 +8,7 @@ nlp = spacy.load("en_core_web_md")
 # 1. tokenize the text
 # 2. remove stop words
 # 3. convert the text to root words (normailze the text)
+# 4. Parts of speech tagging
 # 4. Do more stuff (work in progress)
 
 text = "This is a cat who's height is 10m is partying!."
@@ -38,4 +39,3 @@ for token in doc:
 
 
 print(lemma_word1)
-print(type(lemma_word1))
