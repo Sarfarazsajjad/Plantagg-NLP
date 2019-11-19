@@ -1,27 +1,52 @@
+# data from wikipedia
 ## Import the English language class
-from spacy.lang.en import English
+import spacy
+import en_core_web_md
 
-Callicarpa_Americana_text = '''
-Callicarpa americana, the American beautyberry, is an open-habit, 
-native shrub of the Southern United States which is often grown as an ornamental in gardens and yards. 
-American beautyberries produce large clusters of purple berries,
-which birds and deer eat, thus distributing the seeds.
+Echinacea_paradoxa_text = '''
+Echinacea paradoxa, the yellow coneflower[2][3] or Bush's purple coneflower,[4] is a North American species of flowering plant in the sunflower family. It is native to southern Missouri, Arkansas, and south-central Oklahoma, with one isolated population reported from Montgomery County in eastern Texas.[5] It is listed as threatened in Arkansas.[4][6]
 
-The raw berries, while palatably sweet, are suitable for human consumption only in small amounts, because they are astringent. Some people have reported mild stomach cramps after consumption. The berries are also used in jellies and wine. The roots are used to make herbal tea. As a folk remedy it has been claimed that "fresh, crushed leaves of American beautyberry, Callicarpa americana ... helped keep biting insects away from animals such as horses and mules".[1] A chemical compound isolated from the plant, callicarpenal, was effective as a mosquito repellent in a laboratory experiment using a simulated skin model.[2
-The native range of C. americana extends from Maryland to Florida, west to Texas and Arkansas, and also Mexico, Bermuda, the Bahamas and Cuba.[4]
-Plants with white berries are found in cultivation under the name Callicarpa americana var. lactea; 4 [5][6] not all authorities recognize this as a distinct variety (in the sense of the botanical rank below subspecies).[7]
+Echinacea paradoxa is a perennial herb up to 90 cm (3 feet) tall. One plant can produce several flower heads, each with white, pink, or yellow ray florets and pink or yellow disc florets.[6][7][8][9]
+
+Varieties[1][6]
+Echinacea paradoxa var. paradoxa - yellow rays - Arkansas and Missouri
+Echinacea paradoxavar.neglecta - pink or white rays Oklahoma and Texas
+Echinacea paradoxa var. paradoxa has a baseline chromosome number of x = 11, like most Echinacea plants.
+'''
+
+Lantana_urticoides_text = '''
+Lantana urticoides, also known as West Indian shrubverbena,[3] 
+Texas lantana or calico bush, is a three- to five-foot perennial 
+shrub that grows in Mexico and the U.S. states of Texas,
+Louisiana and Mississippi especially along the Gulf coast.
+The plant can blossom from spring until the first frost.
+It is a species of flowering plant within the verbena family, Verbenaceae.
 '''
 
 
-japanese_mable_text = '''
-Acer palmatum is a deciduous shrub or small tree reaching heights of 6 to 10 ft
-(20 to 33 ft), rarely 16 metres (52 ft), often growing as an understory plant in shady woodlands'''
+Salvia_guaranitica_text = '''
+Salvia guaranitica, the anise-scented sage or hummingbird sage, 
+is a species of Salvia native to a wide area of South America, including Brazil, 
+Paraguay, Uruguay, and Argentina.
+It is a perennial subshrub growing 4 to 5 ft (1.2 to 1.5 m) tall, 
+spreading into a large patch through its spreading roots.
+The leaves are ovate, 4 cm (1.6 in) long and nearly as wide,
+with a fresh mint green color, and an anise scent when crushed. 
+The inflorescences are up to 25 cm (9.8 in) long with flowers in various shades of blue, including an uncommonly true blue. In cold regions, flowering begins in mid summer and continues until frost.
+Salvia guaranitica is a popular ornamental plant in mild areas.
+It grows in either full or three quarter sunlight, in well-drained soil. Numerous cultivars have been selected, including 'Argentine Skies' (pale blue flowers), 'Black and Blue' (very dark violet blue calyx), 'Blue Ensign' (large blue flowers), and 'Purple Splendor' (Light purple flowers).[1] The cultivar 'Blue Enigma', with pure blue flowers, has gained the Royal Horticultural Society's Award of Garden Merit.
+'''
 
 ## Create the nlp object
-nlp = English()
+nlp = en_core_web_md.load()
 
-## Created by processing a string of text with the nlp object
-doc = nlp(japanese_mable_text)
+## Process the text data , spacy automatically breaks text into tokens
+doc = nlp(Salvia_guaranitica_text)
+
+# lemmatize the data to get root words
+lemmatized_docuemnt = [] 
+for token in doc:
+    lemmatized_docuemnt.append(token.lemma_)
 
 ## Iterate over all the tokens in a Doc
 # for token in doc:
@@ -33,6 +58,13 @@ doc = nlp(japanese_mable_text)
 # print(len(doc))
 # print([token.like_num for token in doc])
 
+
+# show named enties in the text
+# Uncomment to see the entities in the document
+# for element in doc.ents:
+#     print('Type: %s, Value: %s' % (element.label_, element))
+
+# custom height extarction based on data review of pattern numeric value followed by m, ft,meters etc..
 for token in doc:
   if token.like_num:
     next_token = doc[token.i + 1]
