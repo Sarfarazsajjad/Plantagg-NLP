@@ -1,0 +1,3 @@
+Lantana_urticoides_text = '''
+Lantana urticoides, also known as West Indian shrubverbena,[3] Texas lantana or calico bush, is a three- to five-foot perennial shrub that grows in Mexico and the U.S. states of Texas, Louisiana and Mississippi especially along the Gulf coast. The plant can blossom from spring until the first frost.[4] It is a species of flowering plant within the verbena family, Verbenaceae.
+'''

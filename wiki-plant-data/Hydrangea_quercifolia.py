@@ -1,0 +1,19 @@
+Hydrangea_quercifolia_text = '''
+Hydrangea quercifolia, commonly known by its translation oakleaf hydrangea or oak-leaved hydrangea, is a species of flowering plant native to the Southeastern United States, in woodland habitats from North Carolina west to Tennessee, and south to Florida and Louisiana. A deciduous shrub with white showy flower heads, it is a commonly grown garden plant. Numerous cultivars are available commercially.
+American botanist William Bartram described Hydrangea quercifolia.[1] Its species name is derived from the Latin words quercus "oak", and folium "leaf".
+Hydrangea quercifolia is a coarse-textured deciduous shrub growing to 3–12 feet (0.91–3.66 m)[2] tall with an open crown. The plant sprouts shoots from underground stolons and often grows in colonies. Young stems are covered in a felt-like light brown bark, and the larger stems have attractive cinnamon-tan-orange bark that shreds and peels in thin flakes.
+
+The leaves are yellowish green to dark green on top and silvery-white underneath. They have three, five or seven pointed lobes and are 4–12 in (10.2–30.5 cm) long and almost as wide. They are larger versions some oak leaves, resembling Quercus species with lobed foliage. Plants in shade have larger leaves than those grown in sun. Hydrangea quercifolia leaves turn rich shades of red, bronze and purple in autumn that persist in winter accompanying the persistent dried flower-heads.
+Hydrangea quercifolia flowers are borne in erect panicles 6–12 in (15.2–30.5 cm) tall and 3–5 in (7.6–12.7 cm) wide at branch tips. Flowers age in colour from creamy white, aging to pink and by autumn and winter are a dry, papery rusty-brown.
+
+Unlike bigleaf hydrangea (Hydrangea macrophylla), flower color does not vary with soil pH.
+
+Oakleaf hydrangea and the popular peegee hydrangea (H. paniculata) are the only hydrangeas with cone-shaped flower clusters; all the others have their flowers in ball-shaped or flat-topped clusters, called umbels.
+Native to continental southeastern North America it grows in mixed hardwood forests, along streams and on forested hillsides, usually on calcareous soils, and often where limestone is at the ground surface. Hydrangea quercifolia is an understory shrub, often in the shade of large oaks, hickories, magnolias, American beech, etc.
+Hydrangea quercifolia, noted by 18th-century botanist William Bartram in his botanizing exploration from the Carolinas to the Florida panhandle in the 1770s.[4] It was slow to enter British and American gardens. In Britain it flowers less profusely and even has a reputation for being tender.[5] In the U.S. its 'more natural' form and texture, compared to the more common Hydrangea macrophylla cultivars, has increased its use in garden design across the country since the latter 20th century.
+Hydrangea quercifolia is cultivated as an ornamental plant in gardens and parks. Though frequently seen as an isolated subject in gardens, it is at its best in a natural or landscaped woodland habitat against the backdrop of larger shrubs and trees. It prefers partial to almost full shade, with morning sun and afternoon shade as optimal. It will tolerate drought, but may not flower. The plant prefers slightly acidic soils with a pH of 5.0–6.5. In the UK the cultivars Snowflake = ‘Brido’[6] and Snow Queen = ‘Flemygea’[7] have gained the Royal Horticultural Society's Award of Garden Merit.[8]
+
+Its hardiness is USDA Zones 5–9, with H. quercifolia 'Snow Queen' hardy to Zone 5, while some other cultivars may not be. Propagation is via cutting or division; short sections of clustered stems with some root attached will make a small shrub in a nursery row.
+
+Fresh or dry, the blossoms of Hydrangea quercifolia are attractive as cut flowers.
+'''
