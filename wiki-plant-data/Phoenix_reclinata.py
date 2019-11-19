@@ -1,0 +1,9 @@
+Phoenix_reclinata_text = '''
+Phoenix reclinata (reclinata - Latin, reclining), the wild date palm or Senegal date palm, is a species of flowering plant in the palm family native to tropical Africa, the Arabian Peninsula, Madagascar and the Comoro Islands. It is also reportedly naturalized in Florida, Puerto Rico, Bermuda and the Leeward Islands.[1] The plants are found from sea level to 3000 m, in rain forest clearings, monsoonal forests and rocky mountainsides.
+Phoenix reclinata is a dioecious clumping palm, producing multiple stems from 7.5 to 15 m in height and 30 cm in width. Foliage is pinnate and recurved, growing 2.5 to 4.5 m in length and 0.75 m in width. Leaf color is bright to deep green on 30 cm petioles with long, sharp spines at the base, with 20 to 40 leaves per crown.
+
+The plants are unisexual and florets appear at the top of the palm stem. Male florets are a dirty, pale yellow and fall off after blooming; females are small, globose and yellow-green.[2] This species grows edible, oblong fruit, orange in color (when ripe), at 2.5 cm in diameter. The fruit are borne in large, pendant clusters and contain one seed each.[2]
+
+Palms across the genus Phoenix readily hybridize with one another resulting in naturally occurring variations. They usually tolerate salt-spray, and moderate drought where the water table is permanently high.
+In addition to the fruit, which attracts animals as well as humans, the palm heart can be eaten as a vegetable. In KwaZulu-Natal, and the Okavango Delta, Botswana, the sap is tapped shortly before flowering to make palm wine. The fibres of young, unopened leaves can be used to make carpets, kilts and brooms. The roots contain tannin and can be used to make a brown dye. They also produce an edible gum. The wood is lightweight and not particularly useful.
+'''

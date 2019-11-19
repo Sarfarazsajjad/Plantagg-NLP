@@ -1,0 +1,6 @@
+Salvia_guaranitica_text = '''
+Salvia guaranitica, the anise-scented sage or hummingbird sage, is a species of Salvia native to a wide area of South America, including Brazil, Paraguay, Uruguay, and Argentina.
+
+It is a perennial subshrub growing 4 to 5 ft (1.2 to 1.5 m) tall, spreading into a large patch through its spreading roots. The leaves are ovate, 4 cm (1.6 in) long and nearly as wide, with a fresh mint green color, and an anise scent when crushed. The inflorescences are up to 25 cm (9.8 in) long with flowers in various shades of blue, including an uncommonly true blue. In cold regions, flowering begins in mid summer and continues until frost.
+Salvia guaranitica is a popular ornamental plant in mild areas. It grows in either full or three quarter sunlight, in well-drained soil. Numerous cultivars have been selected, including 'Argentine Skies' (pale blue flowers), 'Black and Blue' (very dark violet blue calyx), 'Blue Ensign' (large blue flowers), and 'Purple Splendor' (Light purple flowers).[1] The cultivar 'Blue Enigma', with pure blue flowers, has gained the Royal Horticultural Society's Award of Garden Merit.
+'''

@@ -1,0 +1,7 @@
+Miscanthus_sinensis_text = '''
+Miscanthus sinensis, the maiden silvergrass,[1] is a species of flowering plant in the grass family Poaceae, native to eastern Asia throughout most of China, Japan, Taiwan and Korea. It is an herbaceous perennial grass, growing to 0.8–2 m (3–7 ft) tall, rarely 4 m (13 ft), forming dense clumps from an underground rhizome. The leaves are 18–75 cm (7–30 in) tall and 0.3–2 cm broad. The flowers are purplish, held above the foliage. This plant is the preferred structure for the nesting of some species of paper wasps, such as Ropalidia fasciata.
+Common names include Korean uksae[what language is this?],[3][better source needed] Chinese silver grass, Eulalia grass, maiden grass, zebra grass, Susuki grass (ススキ), and porcupine grass. The Latin Miscanthus comes from the Greek for "stalk" and "flower".[4] The qualifier sinensis means "from China",[5] though the plant is found elsewhere in eastern Asia.
+It is widely cultivated as an ornamental plant in temperate regions around the world.
+
+It has become an invasive species in parts of North America.[6] However, it is possible to reduce the likelihood of escape or hybridization with extant wild M. sinensis populations with breeding and proper management.
+'''
