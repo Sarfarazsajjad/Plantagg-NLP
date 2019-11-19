@@ -48,5 +48,11 @@ cs = cp.parse(art_processed)
 iob_tagged = tree2conlltags(cs)
 # pprint(iob_tagged)
 
+
+namedEntities = []
 for word, pos, ner in iob_tagged:
-    print(word, pos, ner)
+    namedEntities.append(ner)
+#     print(word, pos, ner)
+
+print('Named Entites in Document')
+print(len(namedEntities))
