@@ -1,4 +1,3 @@
-from nltk.book import *
 import wikipedia as wikipedia
 import nltk as nltk
 from nltk.corpus import stopwords
@@ -34,8 +33,21 @@ def findHeightWordInSentences(lemmatizedSentences,plantName):
                     writer = csv.writer(csvfile)
                     writer.writerow([plantName,sentenceThatContainHeightKeyword,""])
 
+def findSunlightWordInSentences(lemmatizedSentences,plantName):
+    for sentence in lemmatizedSentences:
+        for word in sentence:
+            if (word == 'sun' or word =='sunlight'):
+                containsunlight = " ".join(str(x) for x in sentence)
+                print("Plant:" ,plantName, "sentence",containsunlight);
+                with open('plantSunlightData.csv','a',newline='') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow([plantName,containsunlight,""])
+
 def clearFile():
     with open('plantData.csv','w+',newline='') as csvfile:
+        pass
+
+    with open('plantSunlightData.csv','w+',newline='') as csvfile:
         pass
 
 if __name__ == '__main__':
@@ -53,3 +65,5 @@ if __name__ == '__main__':
         # print(lemmatizedSentences)
 
         findHeightWordInSentences(lemmatizedSentences,plantName)
+
+        findSunlightWordInSentences(lemmatizedSentences,plantName)
