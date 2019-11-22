@@ -1,5 +1,4 @@
-# data from wikipedia
-## Import the English language class
+# Import the English language class
 import spacy
 import en_core_web_md
 
@@ -45,12 +44,16 @@ doc = nlp(Salvia_guaranitica_text)
 
 # lemmatize the data to get root words
 lemmatized_docuemnt = [] 
-for token in doc:
-    lemmatized_docuemnt.append(token.lemma_)
+
+def lemmatizeDoc(doc):
+  for token in doc:
+      lemmatized_docuemnt.append(token.lemma_)
 
 ## Iterate over all the tokens in a Doc
-# for token in doc:
-#     print(token.text)
+
+def showAllTokens(doc):
+  for token in doc:
+      print(token.text)
 
 # # Get a specific section of the tokenzied document 
 # span = doc[0:4]
@@ -58,15 +61,39 @@ for token in doc:
 # print(len(doc))
 # print([token.like_num for token in doc])
 
-
 # show named enties in the text
 # Uncomment to see the entities in the document
-# for element in doc.ents:
-#     print('Type: %s, Value: %s' % (element.label_, element))
+def showNamedEntities(doc):
+  for element in doc.ents:
+      print('Type: %s, Value: %s' % (element.label_, element))
 
 # custom height extarction based on data review of pattern numeric value followed by m, ft,meters etc..
-for token in doc:
-  if token.like_num:
-    next_token = doc[token.i + 1]
-    if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meters':
-      print('Height found',token.text)
+def findNumericValues(doc):
+  for token in doc:
+    if token.like_num:
+      next_token = doc[token.i + 1]
+      if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meters' or next_token.text == 'cm':
+        print('Height found',token.text,token.pos_)
+
+
+def findPOS(doc):
+  for token in doc:
+    print('word %s pos %s' % (token.text,token.pos_))
+
+
+def spacyNER(doc):
+  counter = 0
+  # Iterate over the predicted entities
+  for ent in doc.ents:
+    # Print the entity text and its label
+    if ent.label_ == "QUANTITY":
+      counter += 1
+      print(ent.text, ent.label_)
+
+  return counter
+
+if __name__ == '__main__':
+  # findNumericValues(doc)
+  # findPOS(doc)
+  a = spacyNER(doc)
+  print(a)
