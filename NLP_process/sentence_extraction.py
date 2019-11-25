@@ -30,18 +30,19 @@ def findHeightWordInSentences(lemmatizedSentences,plantName):
     for sentence in lemmatizedSentences:
         for word in sentence:
             if (word == 'height' or word=='tall'):
+                print('height found for',plantName)
                 sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
+                print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
                 doc = nlp(sentenceThatContainHeightKeyword)
                 for token in doc:
                     if token.like_num:
                         next_token = doc[token.i + 1]
                         prev_token = doc[token.i - 2]
-                        if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meter' or next_token.text == 'metre' or next_token.text == 'cm' and prev_token.like_num:
+                        if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meter' or next_token.text == 'metre' or next_token.text == 'cm' or next_token.text == 'in' or next_token.text == 'foot':
                             token_sentence = doc[prev_token.i:next_token.i + 1]
-                            print('Height sentence',token_sentence)
+                            # print('Height sentence',token_sentence)
                             unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
-                            print(unit)
+                            # print(unit)
                             with open('plantHeightData.csv','a',newline='') as csvfile:
                                 writer = csv.writer(csvfile)
                                 writer.writerow([plantName,unit,'',token_sentence,'',sentenceThatContainHeightKeyword,""])
@@ -50,6 +51,7 @@ def findSunlightWordInSentences(lemmatizedSentences,plantName):
     for sentence in lemmatizedSentences:
         for word in sentence:
             if (word == 'sun' or word =='sunlight' or word == 'sunny'):
+                print('Sunglight found in',plantName)
                 containsunlight = " ".join(str(x) for x in sentence)
                 print("Plant:" ,plantName, "sentence",containsunlight);
                 with open('plantSunlightData.csv','a',newline='') as csvfile:
@@ -105,13 +107,32 @@ def clearFile():
         pass
 
 if __name__ == '__main__':
-    plantNames = ['Acer_palmatum', 'Anisacanthus_quadrifidus','buchloe_dactyloides','Callicarpa_americana','Cercis_canadensis','Chrysactinia_mexicana','Coreopsis_lanceolata','Cotinus_coggygria','Echinacea_paradoxa','Euphorbia_myrsinites','Hesperaloe_funifera','Hydrangea_quercifolia','juniperus_horizontalis','lantana_urticoides','Liriope_muscari','magnolia_soulangeana','Miscanthus_sinensis','Muhlenbergia_lindheimeri','Nerium','Opuntia_rufida','Phlox_divaricata','Phoenix_reclinata','Pyrus_calleryana','Rhododendron_japonicum','Rubus_idaeus','Salvia_guaranitica','Salvia_pachyphylla']
+    plantNames = [
+    'Linnaea_×_grandiflora','Acer_palmatum','Acer_truncatum','Aesculus_pavia',
+    'Agave_parryi','Aloe_vera','Anisacanthus_quadrifidus',
+    'Asparagus_Densiflorus','Astrolepis_sinuata',
+    'Bignonia_capreolata','buchloe_dactyloides','Buddleja_davidii','Buxus_microphylla',
+    'Buxus_sempervirens',
+    'Caladium','Callicarpa_americana','Cercis_canadensis','Calyptocarpus_vialis','Pecan',
+    'Chrysactinia_mexicana','Coreopsis_lanceolata','Cotinus_coggygria','Chamaemelum_nobile',
+    'Chasmanthium_latifolium','Chasmanthium_sessiliflorum','Chilopsis','Chrysactinia_mexicana',
+    'Meyer_lemon','Cordyline_australis','Cordyline_fruticosa','Coreopsis_grandiflora'
+    'Echinacea_paradoxa','Euphorbia_myrsinites','Hesperaloe_funifera',
+    'Hydrangea_quercifolia','juniperus_horizontalis','lantana_urticoides',
+    'Liriope_muscari','magnolia_soulangeana','Miscanthus_sinensis',
+    'Muhlenbergia_lindheimeri','Nerium','Opuntia_rufida',
+    'Phlox_divaricata','Phoenix_reclinata','Pyrus_calleryana',
+    'Rhododendron_japonicum','Rubus_idaeus','Salvia_guaranitica',
+    'Salvia_pachyphylla'
+    ]
+
     singlePlant = ['Acer_palmatum','Anisacanthus_quadrifidus','buchloe_dactyloides']
+    aloe_vera = ["Aloe_vera"]
     clearFile()
-    
+    counter = 0
     for plantName in plantNames:
         page = getPage(plantName);
-
+        
         sents = sentenceTokenize(page)
         # print(sents)
 
@@ -120,10 +141,10 @@ if __name__ == '__main__':
 
         findHeightWordInSentences(lemmatizedSentences,plantName)
 
-        # findSunlightWordInSentences(lemmatizedSentences,plantName)
+        findSunlightWordInSentences(lemmatizedSentences,plantName)
 
-        # findWaterWordInSentences(lemmatizedSentences,plantName)
+        findWaterWordInSentences(lemmatizedSentences,plantName)
 
-        # findSoilWordInSentences(lemmatizedSentences,plantName)
+        findSoilWordInSentences(lemmatizedSentences,plantName)
 
-        # findSoilphWordInSentences(lemmatizedSentences,plantName)
+        findSoilphWordInSentences(lemmatizedSentences,plantName)
