@@ -4,6 +4,9 @@ from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 import csv
 import os
+import spacy
+import en_core_web_md
+nlp = en_core_web_md.load()
 
 def getPage(plantName):
     return wikipedia.page(plantName).content  # get page data in string;
@@ -28,10 +31,20 @@ def findHeightWordInSentences(lemmatizedSentences,plantName):
         for word in sentence:
             if (word == 'height' or word=='tall'):
                 sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
-                with open('plantData.csv','a',newline='') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow([plantName,sentenceThatContainHeightKeyword,""])
+                # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
+                doc = nlp(sentenceThatContainHeightKeyword)
+                for token in doc:
+                    if token.like_num:
+                        next_token = doc[token.i + 1]
+                        prev_token = doc[token.i - 2]
+                        if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meter' or next_token.text == 'metre' or next_token.text == 'cm' and prev_token.like_num:
+                            token_sentence = doc[prev_token.i:next_token.i + 1]
+                            print('Height sentence',token_sentence)
+                            unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
+                            print(unit)
+                            with open('plantHeightData.csv','a',newline='') as csvfile:
+                                writer = csv.writer(csvfile)
+                                writer.writerow([plantName,unit,'',token_sentence,'',sentenceThatContainHeightKeyword,""])
 
 def findSunlightWordInSentences(lemmatizedSentences,plantName):
     for sentence in lemmatizedSentences:
@@ -74,8 +87,10 @@ def findSoilphWordInSentences(lemmatizedSentences,plantName):
                     writer.writerow([plantName,containsoilph,""])
 
 def clearFile():
-    with open('plantData.csv','w+',newline='') as csvfile:
-        pass
+    with open('plantHeightData.csv','w+',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
+
 
     with open('plantSunlightData.csv','w+',newline='') as csvfile:
         pass
@@ -105,10 +120,10 @@ if __name__ == '__main__':
 
         findHeightWordInSentences(lemmatizedSentences,plantName)
 
-        findSunlightWordInSentences(lemmatizedSentences,plantName)
+        # findSunlightWordInSentences(lemmatizedSentences,plantName)
 
-        findWaterWordInSentences(lemmatizedSentences,plantName)
+        # findWaterWordInSentences(lemmatizedSentences,plantName)
 
-        findSoilWordInSentences(lemmatizedSentences,plantName)
+        # findSoilWordInSentences(lemmatizedSentences,plantName)
 
-        findSoilphWordInSentences(lemmatizedSentences,plantName)
+        # findSoilphWordInSentences(lemmatizedSentences,plantName)
