@@ -88,7 +88,7 @@ def findSoilphWordInSentences(lemmatizedSentences,plantName):
                     writer = csv.writer(csvfile)
                     writer.writerow([plantName,containsoilph,""])
 
-def clearFile():
+def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Plantname", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
@@ -107,44 +107,27 @@ def clearFile():
         pass
 
 if __name__ == '__main__':
-    plantNames = [
-    'Linnaea_×_grandiflora','Acer_palmatum','Acer_truncatum','Aesculus_pavia',
-    'Agave_parryi','Aloe_vera','Anisacanthus_quadrifidus',
-    'Asparagus_Densiflorus','Astrolepis_sinuata',
-    'Bignonia_capreolata','buchloe_dactyloides','Buddleja_davidii','Buxus_microphylla',
-    'Buxus_sempervirens',
-    'Caladium','Callicarpa_americana','Cercis_canadensis','Calyptocarpus_vialis','Pecan',
-    'Chrysactinia_mexicana','Coreopsis_lanceolata','Cotinus_coggygria','Chamaemelum_nobile',
-    'Chasmanthium_latifolium','Chasmanthium_sessiliflorum','Chilopsis','Chrysactinia_mexicana',
-    'Meyer_lemon','Cordyline_australis','Cordyline_fruticosa','Coreopsis_grandiflora'
-    'Echinacea_paradoxa','Euphorbia_myrsinites','Hesperaloe_funifera',
-    'Hydrangea_quercifolia','juniperus_horizontalis','lantana_urticoides',
-    'Liriope_muscari','magnolia_soulangeana','Miscanthus_sinensis',
-    'Muhlenbergia_lindheimeri','Nerium','Opuntia_rufida',
-    'Phlox_divaricata','Phoenix_reclinata','Pyrus_calleryana',
-    'Rhododendron_japonicum','Rubus_idaeus','Salvia_guaranitica',
-    'Salvia_pachyphylla'
-    ]
 
-    singlePlant = ['Acer_palmatum','Anisacanthus_quadrifidus','buchloe_dactyloides']
-    aloe_vera = ["Aloe_vera"]
-    clearFile()
-    counter = 0
-    for plantName in plantNames:
-        page = getPage(plantName);
-        
-        sents = sentenceTokenize(page)
-        # print(sents)
+    clearFiles()
+    with open('plantData.csv') as csvfile:
+        next(csvfile)
+        readCSV = csv.reader(csvfile, delimiter=',')
+        for row in readCSV:
+            plantName = row[0]
+            data = row[1]
+            # page = getPage(plantName);
+            sents = sentenceTokenize(data)
+            # # print(sents)
 
-        lemmatizedSentences = lemmitizedList(sents);
-        # print(lemmatizedSentences)
+            lemmatizedSentences = lemmitizedList(sents);
+            # # print(lemmatizedSentences)
 
-        findHeightWordInSentences(lemmatizedSentences,plantName)
+            findHeightWordInSentences(lemmatizedSentences,plantName)
 
-        findSunlightWordInSentences(lemmatizedSentences,plantName)
+            findSunlightWordInSentences(lemmatizedSentences,plantName)
 
-        findWaterWordInSentences(lemmatizedSentences,plantName)
+            findWaterWordInSentences(lemmatizedSentences,plantName)
 
-        findSoilWordInSentences(lemmatizedSentences,plantName)
+            findSoilWordInSentences(lemmatizedSentences,plantName)
 
-        findSoilphWordInSentences(lemmatizedSentences,plantName)
+            findSoilphWordInSentences(lemmatizedSentences,plantName)
