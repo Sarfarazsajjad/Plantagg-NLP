@@ -26,13 +26,15 @@ def lemmitizedList(sents):
     return lemmatizedSentences
 
 
-def findHeightWordInSentences(lemmatizedSentences,plantName):
+def findHeightWordInSentences(lemmatizedSentences,plantName,wikiLink):
+    foundHeight = False
     for sentence in lemmatizedSentences:
         for word in sentence:
-            if (word == 'height' or word=='tall'):
+            if (word == 'height' or word == 'tall'):
                 print('height found for',plantName)
+                foundHeight = True
                 sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
+                # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
                 doc = nlp(sentenceThatContainHeightKeyword)
                 for token in doc:
                     if token.like_num:
@@ -45,66 +47,106 @@ def findHeightWordInSentences(lemmatizedSentences,plantName):
                             # print(unit)
                             with open('plantHeightData.csv','a',newline='') as csvfile:
                                 writer = csv.writer(csvfile)
-                                writer.writerow([plantName,unit,'',token_sentence,'',sentenceThatContainHeightKeyword,""])
+                                writer.writerow([plantName,wikiLink,unit,'',token_sentence,'',sentenceThatContainHeightKeyword,''])
+    
+    if(foundHeight == False):
+        with open('plantHeightData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,wikiLink,'','','','','',''])           
 
-def findSunlightWordInSentences(lemmatizedSentences,plantName):
+def findSunlightWordInSentences(lemmatizedSentences,plantName,wikiLink):
+    sunlightFound = False
     for sentence in lemmatizedSentences:
         for word in sentence:
             if (word == 'sun' or word =='sunlight' or word == 'sunny'):
+                sunlightFound = True
                 print('Sunglight found in',plantName)
                 containsunlight = " ".join(str(x) for x in sentence)
-                print("Plant:" ,plantName, "sentence",containsunlight);
+                # print("Plant:" ,plantName, "sentence",containsunlight);
                 with open('plantSunlightData.csv','a',newline='') as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow([plantName,containsunlight,""])
+                    writer.writerow([plantName,wikiLink,'','','','',containsunlight,""])
 
-def findWaterWordInSentences(lemmatizedSentences,plantName):
+    if(sunlightFound == False):
+        with open('plantSunlightData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,wikiLink,'','','','','','']) 
+
+def findWaterWordInSentences(lemmatizedSentences,plantName,wikiLink):
+    waterFound = False
     for sentence in lemmatizedSentences:
         for word in sentence:
             if (word == 'water' or word =='Water' or word == 'waterlogged' or word == 'wet' or word == 'damp'):
+                waterFound = True
+                print('water found for ',plantName)
                 containwater = " ".join(str(x) for x in sentence)
-                print("Plant:" ,plantName, "sentence",containwater);
+                # print("Plant:" ,plantName, "sentence",containwater);
                 with open('plantWaterData.csv','a',newline='') as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow([plantName,containwater,""])
+                    writer.writerow([plantName,wikiLink,'','','','',containwater,''])
 
-def findSoilWordInSentences(lemmatizedSentences,plantName):
+    if(waterFound == False):
+        with open('plantWaterData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,wikiLink,'','','','','','']) 
+
+def findSoilWordInSentences(lemmatizedSentences,plantName,wikiLink):
+    soilFound = False
     for sentence in lemmatizedSentences:
         for word in sentence:
             if (word == 'soil' or word == 'earth' or word == 'dirt' or word == 'clay' or word == 'ground'):
+                soilFound = True
+                print('soil found for ',plantName)
                 containsoil = " ".join(str(x) for x in sentence)
-                print("Plant:" ,plantName, "sentence",containsoil);
+                # print("Plant:" ,plantName, "sentence",containsoil);
                 with open('plantSoilData.csv','a',newline='') as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow([plantName,containsoil,""])
+                    writer.writerow([plantName,wikiLink,'','','','',containsoil,""])
 
-def findSoilphWordInSentences(lemmatizedSentences,plantName):
+    if(soilFound == False):
+        with open('plantSoilData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,wikiLink,'','','','','',''])
+
+def findSoilphWordInSentences(lemmatizedSentences,plantName,wikiLink):
+    soilPH = False
     for sentence in lemmatizedSentences:
         for word in sentence:
             if (word == 'ph' or word == 'pH' or word == 'PH'):
+                soilPH = True
+                print('soilPH found for ',plantName)
                 containsoilph = " ".join(str(x) for x in sentence)
-                print("Plant:" ,plantName, "sentence",containsoilph);
+                # print("Plant:" ,plantName, "sentence",containsoilph);
                 with open('plantSoilphData.csv','a',newline='') as csvfile:
                     writer = csv.writer(csvfile)
-                    writer.writerow([plantName,containsoilph,""])
+                    writer.writerow([plantName,wikiLink,'','','','',containsoilph,""])
+
+    if(soilPH == False):
+        with open('plantSoilphData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,wikiLink,'','','','','',''])
 
 def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Plantname", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
+        writer.writerow(["Plantname","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
 
 
     with open('plantSunlightData.csv','w+',newline='') as csvfile:
-        pass
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
 
     with open('plantWaterData.csv','w+',newline='') as csvfile:
-        pass
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
 
     with open('plantSoilData.csv','w+',newline='') as csvfile:
-        pass
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
 
     with open('plantSoilphData.csv','w+',newline='') as csvfile:
-        pass
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Sentence"])
 
 if __name__ == '__main__':
 
@@ -113,21 +155,22 @@ if __name__ == '__main__':
         next(csvfile)
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
-            plantName = row[0]
-            data = row[1]
+            plantName = row[1]
+            wikiLink = row[2]
+            plantPageData = row[3]
             # page = getPage(plantName);
-            sents = sentenceTokenize(data)
+            sents = sentenceTokenize(plantPageData)
             # # print(sents)
 
             lemmatizedSentences = lemmitizedList(sents);
             # # print(lemmatizedSentences)
 
-            findHeightWordInSentences(lemmatizedSentences,plantName)
+            findHeightWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findSunlightWordInSentences(lemmatizedSentences,plantName)
+            findSunlightWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findWaterWordInSentences(lemmatizedSentences,plantName)
+            findWaterWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findSoilWordInSentences(lemmatizedSentences,plantName)
+            findSoilWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findSoilphWordInSentences(lemmatizedSentences,plantName)
+            findSoilphWordInSentences(lemmatizedSentences,plantName,wikiLink)
