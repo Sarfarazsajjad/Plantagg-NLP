@@ -7,6 +7,7 @@ import os
 import spacy
 import en_core_web_md
 nlp = en_core_web_md.load()
+from simple_chalk import chalk
 
 def getPage(plantName):
     return wikipedia.page(plantName).content  # get page data in string;
@@ -28,28 +29,38 @@ def lemmitizedList(sents):
 
 def findHeightWordInSentences(lemmatizedSentences,plantName,wikiLink):
     foundHeight = False
-    for sentence in lemmatizedSentences:
-        for word in sentence:
-            if (word == 'height' or word == 'tall'):
-                print('height found for',plantName)
-                foundHeight = True
-                sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
-                doc = nlp(sentenceThatContainHeightKeyword)
-                for token in doc:
-                    if token.like_num:
-                        next_token = doc[token.i + 1]
-                        prev_token = doc[token.i - 2]
-                        if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meter' or next_token.text == 'metre' or next_token.text == 'cm' or next_token.text == 'in' or next_token.text == 'foot':
-                            token_sentence = doc[prev_token.i:next_token.i + 1]
-                            # print('Height sentence',token_sentence)
-                            unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
-                            # print(unit)
-                            with open('plantHeightData.csv','a',newline='') as csvfile:
-                                writer = csv.writer(csvfile)
+    with open('plantHeightData.csv','a',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for sentence in lemmatizedSentences:
+            for word in sentence:
+                if (word == 'height' or word == 'tall'):
+                    print(chalk.green.bold('height found for'),plantName)
+                    foundHeight = True
+                    sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
+                    # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
+                    doc = nlp(sentenceThatContainHeightKeyword)
+                    count = 0
+                    for token in doc:
+                        if token.like_num:
+                            next_token = doc[token.i + 1]
+                            prev_token = doc[token.i - 2]
+                            if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meter' or next_token.text == 'metre' or next_token.text == 'cm' or next_token.text == 'in' or next_token.text == 'foot':
+                                count += 1
+                                token_sentence = doc[prev_token.i:next_token.i + 1]
+                                # print('Height sentence',token_sentence)
+                                unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
+                                # print(unit)
                                 writer.writerow([plantName,wikiLink,unit,'',token_sentence,'',sentenceThatContainHeightKeyword,''])
+                    
+                    if (count > 0):
+                        print(count,chalk.yellow('tokens found in'),plantName,'\n')
+                    else:
+                        writer.writerow([plantName,wikiLink,'','','','',sentenceThatContainHeightKeyword,''])
+                        print(count,chalk.red('tokens matched in'),plantName,'\n')
+
     
     if(foundHeight == False):
+        print(chalk.red("No Height for "),plantName)   
         with open('plantHeightData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow([plantName,wikiLink,'','','','','',''])           
@@ -167,10 +178,10 @@ if __name__ == '__main__':
 
             findHeightWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findSunlightWordInSentences(lemmatizedSentences,plantName,wikiLink)
+            # findSunlightWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findWaterWordInSentences(lemmatizedSentences,plantName,wikiLink)
+            # findWaterWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findSoilWordInSentences(lemmatizedSentences,plantName,wikiLink)
+            # findSoilWordInSentences(lemmatizedSentences,plantName,wikiLink)
 
-            findSoilphWordInSentences(lemmatizedSentences,plantName,wikiLink)
+            # findSoilphWordInSentences(lemmatizedSentences,plantName,wikiLink)
