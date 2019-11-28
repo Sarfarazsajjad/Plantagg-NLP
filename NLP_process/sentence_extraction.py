@@ -81,7 +81,7 @@ def findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
     if(sunlightFound == False):
         with open('plantSunlightData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,'']) 
+            writer.writerow([plantName,category,'','','','',wikiLink,'']) 
 
 def findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     waterFound = False
@@ -99,7 +99,7 @@ def findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     if(waterFound == False):
         with open('plantWaterData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,'']) 
+            writer.writerow([plantName,category,'','','','',wikiLink,'']) 
 
 def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     soilFound = False
@@ -117,7 +117,7 @@ def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     if(soilFound == False):
         with open('plantSoilData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,''])
+            writer.writerow([plantName,category,'','','','',wikiLink,''])
 
 def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     soilPH = False
@@ -135,7 +135,7 @@ def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     if(soilPH == False):
         with open('plantSoilphData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,''])
+            writer.writerow([plantName,category,'','','','',wikiLink,''])
 
 def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
@@ -144,7 +144,7 @@ def clearFiles():
 
     with open('plantSunlightData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Evidence (Source text/Sentence)"])
+        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     with open('plantWaterData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
