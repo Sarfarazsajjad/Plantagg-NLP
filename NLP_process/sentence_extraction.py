@@ -8,6 +8,10 @@ import spacy
 import en_core_web_md
 nlp = en_core_web_md.load()
 from simple_chalk import chalk
+from nltk.tokenize import RegexpTokenizer
+
+# Regix to filter data from text
+tokenizer = RegexpTokenizer(r'\w+')
 
 def getPage(plantName):
     return wikipedia.page(plantName).content  # get page data in string;
@@ -37,6 +41,9 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     print(chalk.green.bold('height found for'),plantName)
                     foundHeight = True
                     sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
+                    # print(sentenceThatContainHeightKeyword,'\n')
+                    filterdSentence = tokenizer.tokenize(sentenceThatContainHeightKeyword)
+                    sentenceThatContainHeightKeyword = " ".join(str(x) for x in filterdSentence)
                     # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
                     doc = nlp(sentenceThatContainHeightKeyword)
                     count = 0
@@ -44,7 +51,7 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                         if token.like_num:
                             next_token = doc[token.i + 1]
                             prev_token = doc[token.i - 2]
-                            if next_token.text == "m" or next_token.text == 'ft' or next_token.text == 'meter' or next_token.text == 'metre' or next_token.text == 'cm' or next_token.text == 'in' or next_token.text == 'foot':
+                            if next_token.lower_ == "m" or next_token.lower_ == 'ft' or next_token.lower_ == 'meter' or next_token.lower_ == 'metre' or next_token.lower_ == 'cm' or next_token.lower_ == 'in' or next_token.lower_ == 'foot':
                                 count += 1
                                 token_sentence = doc[prev_token.i:next_token.i + 1]
                                 # print('Height sentence',token_sentence)
@@ -67,39 +74,69 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
 
 def findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     sunlightFound = False
-    for sentence in lemmatizedSentences:
-        for word in sentence:
-            if (word == 'sun' or word =='sunlight' or word == 'sunny'):
-                sunlightFound = True
-                print('Sunglight found in',plantName)
-                containsunlight = " ".join(str(x) for x in sentence)
-                # print("Plant:" ,plantName, "sentence",containsunlight);
-                with open('plantSunlightData.csv','a',newline='') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow([plantName,category,'','','','',wikiLink,containsunlight,''])
+    with open('plantSunlightData.csv','a',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for sentence in lemmatizedSentences:
+            for word in sentence:
+                if (word == 'sun' or word =='sunlight' or word == 'sunny'):
+                    sunlightFound = True
+                    print('Sunglight found in',plantName)
+                    containsunlight = " ".join(str(x) for x in sentence)
+                    filterdSentence = tokenizer.tokenize(containsunlight)
+                    containsunlight = " ".join(str(x) for x in filterdSentence)
+                    # print("Plant:" ,plantName, "sentence",containsunlight);
+                    doc = nlp(containsunlight)
+                    count = 0
+                    for token in doc:
+                        if (token.lower_ == 'sun' or token.lower_ == 'sunny' or token.lower_ == 'sunlight' or token.lower_ == 'sun s ray' or token.lower_ == 'shade'):
+                            count += 1
+                            pre_token = doc[token.i - 1]
+                            value = doc[pre_token.i:token.i + 1]
+                            writer.writerow([plantName,category,'','',value,'',wikiLink,containsunlight,''])
+
+                    if (count > 0):
+                        print(count,chalk.yellow('sunlight tokens found in'),plantName,'\n')
+                    else:
+                        writer.writerow([plantName,category,'not found','','not found','',wikiLink,containsunlight,''])
+                        print(count,chalk.red('sunlight tokens matched in'),plantName,'\n')
 
     if(sunlightFound == False):
         with open('plantSunlightData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,'']) 
+            writer.writerow([plantName,category,'','','','',wikiLink,'']) 
 
 def findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     waterFound = False
-    for sentence in lemmatizedSentences:
-        for word in sentence:
-            if (word == 'water' or word =='Water' or word == 'waterlogged' or word == 'wet' or word == 'damp'):
-                waterFound = True
-                print('water found for ',plantName)
-                containwater = " ".join(str(x) for x in sentence)
-                # print("Plant:" ,plantName, "sentence",containwater);
-                with open('plantWaterData.csv','a',newline='') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow([plantName,category,'','','','',wikiLink,containwater,''])
+    with open('plantWaterData.csv','a',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for sentence in lemmatizedSentences:
+            for word in sentence:
+                if (word == 'water' or word =='Water' or word == 'waterlogged' or word == 'wet' or word == 'damp'):
+                    waterFound = True
+                    print('water found for ',plantName)
+                    containwater = " ".join(str(x) for x in sentence)
+                    filterdSentence = tokenizer.tokenize(containwater)
+                    containwater = " ".join(str(x) for x in filterdSentence)
+                    # print("Plant:" ,plantName, "sentence",containwater);
+                    doc = nlp(containwater)
+                    count = 0
+                    for token in doc:
+                        if (token.lower_ == 'water' or token.lower_ == 'wet' or token.lower_ == 'damp' or token.lower_ == 'soggy' or token.lower_ == 'moisture'):
+                            count +=1
+                            pre_token = doc[token.i - 3]
+                            value = doc[pre_token.i:token.i + 1]
+                            writer.writerow([plantName,category,'','',value,'',wikiLink,containwater,''])
+    
+                    if (count > 0):
+                        print(count,chalk.magenta('water tokens in'),plantName,'\n')
+                    else:
+                        writer.writerow([plantName,category,'','','','',wikiLink,containwater,''])
+                        print(count,chalk.red('water tokens matched in'),plantName,'\n')
 
     if(waterFound == False):
         with open('plantWaterData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,'']) 
+            writer.writerow([plantName,category,'','','','',wikiLink,'']) 
 
 def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     soilFound = False
@@ -117,7 +154,7 @@ def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     if(soilFound == False):
         with open('plantSoilData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,''])
+            writer.writerow([plantName,category,'','','','',wikiLink,''])
 
 def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     soilPH = False
@@ -135,7 +172,7 @@ def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     if(soilPH == False):
         with open('plantSoilphData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','','',wikiLink,''])
+            writer.writerow([plantName,category,'','','','',wikiLink,''])
 
 def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
@@ -144,7 +181,7 @@ def clearFiles():
 
     with open('plantSunlightData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category","Wiki link", "Unit",'Unit Verified',"Value",'Value Verified',"Evidence (Source text/Sentence)"])
+        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     with open('plantWaterData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -171,10 +208,10 @@ if __name__ == '__main__':
             plantPageData = row[4]
             # page = getPage(plantName);
             sents = sentenceTokenize(plantPageData)
-            # # print(sents)
+            # print(sents)
 
             lemmatizedSentences = lemmitizedList(sents);
-            # # print(lemmatizedSentences)
+            # print(lemmatizedSentences)
 
             findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
