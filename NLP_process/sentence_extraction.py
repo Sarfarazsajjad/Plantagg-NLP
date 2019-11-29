@@ -156,23 +156,65 @@ def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
             writer = csv.writer(csvfile)
             writer.writerow([plantName,category,'','','','',wikiLink,''])
 
+# def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
+#     soilPH = False
+#     for sentence in lemmatizedSentences:
+#         for word in sentence:
+#             if (word == 'ph' or word == 'pH' or word == 'PH'):
+#                 soilPH = True
+#                 print('soilPH found for ',plantName)
+#                 containsoilph = " ".join(str(x) for x in sentence)
+#                 # print("Plant:" ,plantName, "sentence",containsoilph);
+#                 with open('plantSoilphData.csv','a',newline='') as csvfile:
+#                     writer = csv.writer(csvfile)
+#                     writer.writerow([plantName,category,'','','','',wikiLink,containsoilph,""])
+
+#     if(soilPH == False):
+#         with open('plantSoilphData.csv','a',newline='') as csvfile:
+#             writer = csv.writer(csvfile)
+#             writer.writerow([plantName,category,'','','','',wikiLink,''])
+
 def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     soilPH = False
-    for sentence in lemmatizedSentences:
-        for word in sentence:
-            if (word == 'ph' or word == 'pH' or word == 'PH'):
-                soilPH = True
-                print('soilPH found for ',plantName)
-                containsoilph = " ".join(str(x) for x in sentence)
-                # print("Plant:" ,plantName, "sentence",containsoilph);
-                with open('plantSoilphData.csv','a',newline='') as csvfile:
-                    writer = csv.writer(csvfile)
-                    writer.writerow([plantName,category,'','','','',wikiLink,containsoilph,""])
+    with open('plantSoilphData.csv','a',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        for sentence in lemmatizedSentences:
+            for word in sentence:
+                if (word == 'ph' or word == 'pH' or word == 'PH'):
+                    print(chalk.green.bold('Soil pH found for'),plantName)
+                    soilPH = True
+                    containsoilph = " ".join(str(x) for x in sentence)
+                    # print(containsoilph,'\n')
+                    # filterdSentence = tokenizer.tokenize(containsoilph)
+                    # containsoilph = " ".join(str(x) for x in filterdSentence)
+                    # print("plant Name is :" ,plantName, containsoilph);
+                    doc = nlp(containsoilph)
+                    count = 0
+                    for token in doc:
+                        if token.like_num:
+                            next_token = doc[token.i + 1]
+                            prev_token = doc[token.i - 1]
+                            if prev_token.lower_ == "soil" or prev_token.lower_ == 'above' or prev_token.lower_ == 'below' or prev_token.lower_ == 'of' or prev_token.lower_ == 'level' or next_token.lower_ == 'level' or prev_token.lower_ == 'range' or prev_token.lower_ == 'about' or prev_token.lower_ == 'ph' or prev_token.lower_ == 'pH' or prev_token.lower_ == 'between':
+                                count += 1
+                                token_sentence = doc[prev_token.i:next_token.i + 1]
+                                # print('Height sentence',token_sentence)
+                                unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
+                                # print(unit)
+                                writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,containsoilph,''])
+                    
+                    if (count > 0):
+                        print(count,chalk.yellow('tokens found in'),plantName,'\n')
+                    else:
+                        writer.writerow([plantName,category,'not found','','not found','',wikiLink,containsoilph,''])
+                        print(count,chalk.red('tokens matched in'),plantName,'\n')
 
+    
     if(soilPH == False):
+        print(chalk.red("No Soil pH for "),plantName)   
         with open('plantSoilphData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','',wikiLink,''])
+            writer.writerow([plantName,category,'not found','','not found','',wikiLink,''])
+
 
 def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
@@ -213,12 +255,12 @@ if __name__ == '__main__':
             lemmatizedSentences = lemmitizedList(sents);
             # print(lemmatizedSentences)
 
-            findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
             findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
