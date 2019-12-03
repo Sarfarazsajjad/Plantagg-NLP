@@ -156,23 +156,23 @@ def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
             writer = csv.writer(csvfile)
             writer.writerow([plantName,category,'','','','',wikiLink,''])
 
-# def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
-#     soilPH = False
-#     for sentence in lemmatizedSentences:
-#         for word in sentence:
-#             if (word == 'ph' or word == 'pH' or word == 'PH'):
-#                 soilPH = True
-#                 print('soilPH found for ',plantName)
-#                 containsoilph = " ".join(str(x) for x in sentence)
-#                 # print("Plant:" ,plantName, "sentence",containsoilph);
-#                 with open('plantSoilphData.csv','a',newline='') as csvfile:
-#                     writer = csv.writer(csvfile)
-#                     writer.writerow([plantName,category,'','','','',wikiLink,containsoilph,""])
+def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
+    soilPH = False
+    for sentence in lemmatizedSentences:
+        for word in sentence:
+            if (word == 'ph' or word == 'pH' or word == 'PH'):
+                soilPH = True
+                print('soilPH found for ',plantName)
+                containsoilph = " ".join(str(x) for x in sentence)
+                # print("Plant:" ,plantName, "sentence",containsoilph);
+                with open('plantSoilphData.csv','a',newline='') as csvfile:
+                    writer = csv.writer(csvfile)
+                    writer.writerow([plantName,category,'','','','',wikiLink,containsoilph,""])
 
-#     if(soilPH == False):
-#         with open('plantSoilphData.csv','a',newline='') as csvfile:
-#             writer = csv.writer(csvfile)
-#             writer.writerow([plantName,category,'','','','',wikiLink,''])
+    if(soilPH == False):
+        with open('plantSoilphData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,category,'','','','',wikiLink,''])
 
 def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     soilPH = False
