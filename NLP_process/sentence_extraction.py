@@ -83,7 +83,39 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                                 # print(unit)
                                 # writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,sentenceThatContainHeightKeyword,''])
                         
+                    # unit cleanup
+                    plant_height_data_str = []
+                    plant_height_data_str_ft = []
+                    plant_height_data_str_cm = []
+                    plant_height_data_str_m = []
+                    plant_height_data_str_in = []
+                    for valueWithUnit in plant_height_data:
+                        stringData = valueWithUnit.text
+                        stringData = stringData.replace("-"," ")
+                        stringData = stringData.replace("centimetre","cm")
+                        stringData = stringData.replace("foot","ft")
+                        stringData = stringData.replace("meter","m")
+                        stringData = stringData.replace("inch","in")
+                        stringData = stringData.replace('–', ' ')
+                        
+                        if stringData.find('in') > 0:
+                            plant_height_data_str_in.append(stringData)
+                        if stringData.find('ft') > 0:
+                            plant_height_data_str_ft.append(stringData)
+                        if stringData.find(' m') > 0:
+                            plant_height_data_str_m.append(stringData)
+                        if stringData.find(' cm') > 0:
+                            plant_height_data_str_cm.append(stringData)
+                        
+                        plant_height_data_str.append(stringData)
+                        
+                    
                     print(chalk.red(plantName),plant_height_data)
+                    print(chalk.green(plantName),plant_height_data_str)
+                    print(chalk.yellow(plantName),'in values',plant_height_data_str_in)
+                    print(chalk.yellow(plantName),'ft values',plant_height_data_str_ft)
+                    print(chalk.yellow(plantName),'m values',plant_height_data_str_m)
+                    print(chalk.yellow(plantName),'cm values',plant_height_data_str_cm)
                     # if (count > 0):
                         # print(count,chalk.red.bold('tokens found in'),plantName,'\n')
                     # else:
