@@ -41,9 +41,6 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     print(chalk.green.bold('height found for'),plantName)
                     foundHeight = True
                     sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                    print(sentenceThatContainHeightKeyword,'\n')
-                    filterdSentence = tokenizer.tokenize(sentenceThatContainHeightKeyword)
-                    sentenceThatContainHeightKeyword = " ".join(str(x) for x in filterdSentence)
                     print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
                     doc = nlp(sentenceThatContainHeightKeyword)
                     count = 0
