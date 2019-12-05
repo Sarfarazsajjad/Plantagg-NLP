@@ -41,24 +41,26 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     print(chalk.green.bold('height found for'),plantName)
                     foundHeight = True
                     sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                    # print(sentenceThatContainHeightKeyword,'\n')
+                    print(sentenceThatContainHeightKeyword,'\n')
                     filterdSentence = tokenizer.tokenize(sentenceThatContainHeightKeyword)
                     sentenceThatContainHeightKeyword = " ".join(str(x) for x in filterdSentence)
-                    # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
+                    print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
                     doc = nlp(sentenceThatContainHeightKeyword)
                     count = 0
                     for token in doc:
                         if token.like_num:
-                            next_token = doc[token.i + 1]
-                            prev_token = doc[token.i - 2]
-                            if next_token.lower_ == "m" or next_token.lower_ == 'ft' or next_token.lower_ == 'meter' or next_token.lower_ == 'metre' or next_token.lower_ == 'cm' or next_token.lower_ == 'in' or next_token.lower_ == 'foot':
-                                count += 1
-                                token_sentence = doc[prev_token.i:next_token.i + 1]
-                                # print('Height sentence',token_sentence)
-                                unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
-                                # print(unit)
-                                writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,sentenceThatContainHeightKeyword,''])
-                    
+                            print("token",token," token.i",token.i," len(doc)",len(doc))
+                            if len(doc) > (token.i+1):
+                                next_token = doc[token.i + 1]
+                                prev_token = doc[token.i - 2]
+                                if next_token.lower_ == "m" or next_token.lower_ == 'ft' or next_token.lower_ == 'meter' or next_token.lower_ == 'metre' or next_token.lower_ == 'cm' or next_token.lower_ == 'in' or next_token.lower_ == 'foot':
+                                    count += 1
+                                    token_sentence = doc[prev_token.i:next_token.i + 1]
+                                    # print('Height sentence',token_sentence)
+                                    unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
+                                    # print(unit)
+                                    writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,sentenceThatContainHeightKeyword,''])
+                        
                     if (count > 0):
                         print(count,chalk.yellow('tokens found in'),plantName,'\n')
                     else:
@@ -221,21 +223,21 @@ def clearFiles():
         writer = csv.writer(csvfile)
         writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    with open('plantSunlightData.csv','w+',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    # with open('plantSunlightData.csv','w+',newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    with open('plantWaterData.csv','w+',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    # with open('plantWaterData.csv','w+',newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    with open('plantSoilData.csv','w+',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    # with open('plantSoilData.csv','w+',newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    with open('plantSoilphData.csv','w+',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    # with open('plantSoilphData.csv','w+',newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
 if __name__ == '__main__':
 
@@ -255,7 +257,7 @@ if __name__ == '__main__':
             lemmatizedSentences = lemmitizedList(sents);
             # print(lemmatizedSentences)
 
-            # findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
             # findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
@@ -263,4 +265,4 @@ if __name__ == '__main__':
 
             # findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
