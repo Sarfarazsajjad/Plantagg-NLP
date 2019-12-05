@@ -9,6 +9,7 @@ import en_core_web_md
 nlp = en_core_web_md.load()
 from simple_chalk import chalk
 from nltk.tokenize import RegexpTokenizer
+import re
 
 # Regix to filter data from text
 tokenizer = RegexpTokenizer(r'\w+')
@@ -85,10 +86,10 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                         
                     # unit cleanup
                     plant_height_data_str = []
-                    plant_height_data_str_ft = []
-                    plant_height_data_str_cm = []
-                    plant_height_data_str_m = []
-                    plant_height_data_str_in = []
+                    plant_height_data_str_ft = ''
+                    plant_height_data_str_cm = ''
+                    plant_height_data_str_m = ''
+                    plant_height_data_str_in = ''
                     for valueWithUnit in plant_height_data:
                         stringData = valueWithUnit.text
                         stringData = stringData.replace("-"," ")
@@ -97,24 +98,59 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                         stringData = stringData.replace("meter","m")
                         stringData = stringData.replace("inch","in")
                         stringData = stringData.replace('–', ' ')
+                        stringData = stringData.replace('to', ' ')
                         
                         if stringData.find('in') > 0:
-                            plant_height_data_str_in.append(stringData)
+                            plant_height_data_str_in = plant_height_data_str_in + stringData
+                            plant_height_data_str_in = plant_height_data_str_in.replace('in','')
                         if stringData.find('ft') > 0:
-                            plant_height_data_str_ft.append(stringData)
+                            plant_height_data_str_ft = plant_height_data_str_ft + stringData
+                            plant_height_data_str_ft = plant_height_data_str_ft.replace('ft','')
                         if stringData.find(' m') > 0:
-                            plant_height_data_str_m.append(stringData)
+                            plant_height_data_str_m = plant_height_data_str_m + stringData
+                            plant_height_data_str_m = plant_height_data_str_m.replace('m','')
                         if stringData.find(' cm') > 0:
-                            plant_height_data_str_cm.append(stringData)
+                            plant_height_data_str_cm = plant_height_data_str_cm + stringData
+                            plant_height_data_str_cm = plant_height_data_str_cm.replace('cm','')
                         
                         plant_height_data_str.append(stringData)
                         
                     
                     print(chalk.red(plantName),plant_height_data)
                     print(chalk.green(plantName),plant_height_data_str)
-                    print(chalk.yellow(plantName),'in values',plant_height_data_str_in)
+
+                    # inch
+                    # remove all characters
+                    plant_height_data_str_in = removeAlphabets(plant_height_data_str_in)
+                    print(chalk.yellow(plantName),'inch values',plant_height_data_str_in)
+                    plant_height_data_str_in = plant_height_data_str_in.split()
+                    plant_height_data_str_in = list(map(float, plant_height_data_str_in))
+                    plant_height_data_str_in = sorted(plant_height_data_str_in)
+                    print(chalk.yellow(plantName),'inch values',plant_height_data_str_in)
+                    
+                    # ft
+                    plant_height_data_str_ft = removeAlphabets(plant_height_data_str_ft)
                     print(chalk.yellow(plantName),'ft values',plant_height_data_str_ft)
+                    plant_height_data_str_ft = plant_height_data_str_ft.split()
+                    plant_height_data_str_ft = list(map(float, plant_height_data_str_ft))
+                    plant_height_data_str_ft = sorted(plant_height_data_str_ft)
+                    print(chalk.yellow(plantName),'ft values',plant_height_data_str_ft)
+
+                    # m
+                    plant_height_data_str_m = removeAlphabets(plant_height_data_str_m)
                     print(chalk.yellow(plantName),'m values',plant_height_data_str_m)
+                    plant_height_data_str_m = plant_height_data_str_m.split()
+                    plant_height_data_str_m = list(map(float, plant_height_data_str_m))
+                    plant_height_data_str_m = sorted(plant_height_data_str_m)
+                    print(chalk.yellow(plantName),'m values',plant_height_data_str_m)
+
+                    # cm
+
+                    plant_height_data_str_cm = removeAlphabets(plant_height_data_str_cm)
+                    print(chalk.yellow(plantName),'cm values',plant_height_data_str_cm)
+                    plant_height_data_str_cm = plant_height_data_str_cm.split()
+                    plant_height_data_str_cm = list(map(float, plant_height_data_str_cm))
+                    plant_height_data_str_cm = sorted(plant_height_data_str_cm)
                     print(chalk.yellow(plantName),'cm values',plant_height_data_str_cm)
                     # if (count > 0):
                         # print(count,chalk.red.bold('tokens found in'),plantName,'\n')
@@ -272,7 +308,60 @@ def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
             writer = csv.writer(csvfile)
             writer.writerow([plantName,category,'not found','','not found','',wikiLink,''])
 
-
+def removeAlphabets(str):
+    result = str.replace('a','')
+    result = result.replace('b','')
+    result = result.replace('c','')
+    result = result.replace('d','')
+    result = result.replace('e','')
+    result = result.replace('f','')
+    result = result.replace('g','')
+    result = result.replace('h','')
+    result = result.replace('i','')
+    result = result.replace('j','')
+    result = result.replace('k','')
+    result = result.replace('l','')
+    result = result.replace('m','')
+    result = result.replace('n','')
+    result = result.replace('o','')
+    result = result.replace('p','')
+    result = result.replace('q','')
+    result = result.replace('r','')
+    result = result.replace('s','')
+    result = result.replace('t','')
+    result = result.replace('u','')
+    result = result.replace('v','')
+    result = result.replace('w','')
+    result = result.replace('x','')
+    result = result.replace('y','')
+    result = result.replace('z','')
+    result = result.replace('A','')
+    result = result.replace('B','')
+    result = result.replace('C','')
+    result = result.replace('D','')
+    result = result.replace('E','')
+    result = result.replace('F','')
+    result = result.replace('G','')
+    result = result.replace('H','')
+    result = result.replace('I','')
+    result = result.replace('J','')
+    result = result.replace('K','')
+    result = result.replace('L','')
+    result = result.replace('M','')
+    result = result.replace('N','')
+    result = result.replace('O','')
+    result = result.replace('P','')
+    result = result.replace('Q','')
+    result = result.replace('R','')
+    result = result.replace('S','')
+    result = result.replace('T','')
+    result = result.replace('U','')
+    result = result.replace('V','')
+    result = result.replace('W','')
+    result = result.replace('X','')
+    result = result.replace('Y','')
+    result = result.replace('Z','')
+    return result
 def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
