@@ -41,28 +41,54 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     print(chalk.green.bold('height found for'),plantName)
                     foundHeight = True
                     sentenceThatContainHeightKeyword = " ".join(str(x) for x in sentence)
-                    print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
+                    # print(sentenceThatContainHeightKeyword,'\n')
+                    # filterdSentence = tokenizer.tokenize(sentenceThatContainHeightKeyword)
+                    # sentenceThatContainHeightKeyword = " ".join(str(x) for x in filterdSentence)
+                    # print("plant Name is :" ,plantName, sentenceThatContainHeightKeyword);
                     doc = nlp(sentenceThatContainHeightKeyword)
                     count = 0
+                    plant_height_data = []
                     for token in doc:
-                        if token.like_num:
-                            print("token",token," token.i",token.i," len(doc)",len(doc))
-                            if len(doc) > (token.i+1):
-                                next_token = doc[token.i + 1]
-                                prev_token = doc[token.i - 2]
-                                if next_token.lower_ == "m" or next_token.lower_ == 'ft' or next_token.lower_ == 'meter' or next_token.lower_ == 'metre' or next_token.lower_ == 'cm' or next_token.lower_ == 'in' or next_token.lower_ == 'foot':
+                        t = token.text
+                        if t == 'm' or t == 'meter' or t == 'metre' or t == 'ft' or t == 'foot' or t == 'cm' or t =='centimetre' or t == 'in':
+                            # if len(doc) > (token.i+1):
+                                # next_token = doc[token.i + 1]
+                            prev_token = doc[token.i - 1]
+                            if prev_token.like_num:
+                                count += 1
+                                # print("token",token," token.i",token.i," len(doc)",len(doc))
+                                token_sentence = doc[prev_token.i: token.i + 1]
+                                print("case#1",chalk.yellow.bold(token_sentence))
+                                plant_height_data.append(token_sentence)
+                                if doc[prev_token.i - 2].like_num: # 1 to 2 unit
                                     count += 1
-                                    token_sentence = doc[prev_token.i:next_token.i + 1]
-                                    # print('Height sentence',token_sentence)
-                                    unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
-                                    # print(unit)
-                                    writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,sentenceThatContainHeightKeyword,''])
+                                    token_sentence = doc[prev_token.i - 2: token.i + 1]
+                                    print("case#2",chalk.blue.bold(token_sentence))
+                                    plant_height_data.append(token_sentence)
+                                else:
+                                    pass
+                            else: #get data for case#3 x-x unit
+                                if prev_token.is_punct == False:
+                                    token_sentence = doc[prev_token.i: token.i + 1]
+                                    print("case#3",chalk.magenta(token_sentence)) #x-x uni
+                                    plant_height_data.append(token_sentence)
+                                else:
+                                    pass # do nothing if theres a punct mark
+                                
+                                # if next_token.lower_ == "m" or next_token.lower_ == 'ft' or next_token.lower_ == 'meter' or next_token.lower_ == 'metre' or next_token.lower_ == 'cm' or next_token.lower_ == 'in' or next_token.lower_ == 'foot':
+                                # count += 1
+                                # token_sentence = doc[prev_token.i:next_token.i + 1]
+                                # print('Height sentence',token_sentence)
+                                # unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
+                                # print(unit)
+                                # writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,sentenceThatContainHeightKeyword,''])
                         
-                    if (count > 0):
-                        print(count,chalk.yellow('tokens found in'),plantName,'\n')
-                    else:
-                        writer.writerow([plantName,category,'not found','','not found','',wikiLink,sentenceThatContainHeightKeyword,''])
-                        print(count,chalk.red('tokens matched in'),plantName,'\n')
+                    print(chalk.red(plantName),plant_height_data)
+                    # if (count > 0):
+                        # print(count,chalk.red.bold('tokens found in'),plantName,'\n')
+                    # else:
+                        # writer.writerow([plantName,category,'not found','','not found','',wikiLink,sentenceThatContainHeightKeyword,''])
+                        # print(count,chalk.red('tokens matched in'),plantName,'\n')
 
     
     if(foundHeight == False):
@@ -239,7 +265,7 @@ def clearFiles():
 if __name__ == '__main__':
 
     clearFiles()
-    with open('plantData.csv') as csvfile:
+    with open('plantData1.csv') as csvfile:
         next(csvfile)
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
