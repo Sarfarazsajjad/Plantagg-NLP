@@ -124,46 +124,86 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     plant_height_data_str_in = removeAlphabets(plant_height_data_str_in)
                     print(chalk.yellow(plantName),'inch values',plant_height_data_str_in)
                     plant_height_data_str_in = plant_height_data_str_in.split()
-                    plant_height_data_str_in = list(map(float, plant_height_data_str_in))
-                    plant_height_data_str_in = sorted(plant_height_data_str_in)
-                    print(chalk.yellow(plantName),'inch values',plant_height_data_str_in)
-                    
+                    try:
+                        plant_height_data_str_in = list(map(float, plant_height_data_str_in))
+                        plant_height_data_str_in = sorted(plant_height_data_str_in)
+                        print(chalk.cyan.bold(plantName),'inch values',plant_height_data_str_in)
+                    except ValueError:
+                        pass
+
                     # ft
                     plant_height_data_str_ft = removeAlphabets(plant_height_data_str_ft)
                     print(chalk.yellow(plantName),'ft values',plant_height_data_str_ft)
                     plant_height_data_str_ft = plant_height_data_str_ft.split()
-                    plant_height_data_str_ft = list(map(float, plant_height_data_str_ft))
-                    plant_height_data_str_ft = sorted(plant_height_data_str_ft)
-                    print(chalk.yellow(plantName),'ft values',plant_height_data_str_ft)
-
+                    try:
+                        plant_height_data_str_ft = list(map(float, plant_height_data_str_ft))
+                        plant_height_data_str_ft = sorted(plant_height_data_str_ft)
+                        print(chalk.cyan.bold(plantName),'ft values',plant_height_data_str_ft)
+                    except ValueError:
+                        pass
                     # m
                     plant_height_data_str_m = removeAlphabets(plant_height_data_str_m)
                     print(chalk.yellow(plantName),'m values',plant_height_data_str_m)
                     plant_height_data_str_m = plant_height_data_str_m.split()
-                    plant_height_data_str_m = list(map(float, plant_height_data_str_m))
-                    plant_height_data_str_m = sorted(plant_height_data_str_m)
-                    print(chalk.yellow(plantName),'m values',plant_height_data_str_m)
+                    try:
+                        plant_height_data_str_m = list(map(float, plant_height_data_str_m))
+                        plant_height_data_str_m = sorted(plant_height_data_str_m)
+                        print(chalk.cyan.bold(plantName),'m values',plant_height_data_str_m)
+                    except ValueError:
+                        pass
 
                     # cm
-
                     plant_height_data_str_cm = removeAlphabets(plant_height_data_str_cm)
                     print(chalk.yellow(plantName),'cm values',plant_height_data_str_cm)
                     plant_height_data_str_cm = plant_height_data_str_cm.split()
-                    plant_height_data_str_cm = list(map(float, plant_height_data_str_cm))
-                    plant_height_data_str_cm = sorted(plant_height_data_str_cm)
-                    print(chalk.yellow(plantName),'cm values',plant_height_data_str_cm)
+                    try:
+                        plant_height_data_str_cm = list(map(float, plant_height_data_str_cm))
+                        plant_height_data_str_cm = sorted(plant_height_data_str_cm)
+                        print(chalk.cyan.bold(plantName),'cm values',plant_height_data_str_cm)
+                    except ValueError:
+                        pass
+
+                    
+                    if (len(plant_height_data_str_in) > 0):
+                        temp = ['x'] * 10
+                        for index,value in enumerate(plant_height_data_str_in):
+                            temp[index] = value
+                        
+                        writer.writerow([plantName,category,'in',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
+                    
+                    if (len(plant_height_data_str_cm) > 0):
+                        temp = ['x'] * 10
+                        for index,value in enumerate(plant_height_data_str_in):
+                            temp[index] = value
+                        
+                        writer.writerow([plantName,category,'cm',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
+                    
+                    if (len(plant_height_data_str_ft) > 0):
+                        temp = ['x'] * 10
+                        for index,value in enumerate(plant_height_data_str_in):
+                            temp[index] = value
+
+                        writer.writerow([plantName,category,'ft',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
+                    
+                    if (len(plant_height_data_str_m) > 0):
+                        temp = ['x'] * 10
+                        for index,value in enumerate(plant_height_data_str_in):
+                            temp[index] = value
+
+                        writer.writerow([plantName,category,'m',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
+                
+                
                     # if (count > 0):
                         # print(count,chalk.red.bold('tokens found in'),plantName,'\n')
                     # else:
                         # writer.writerow([plantName,category,'not found','','not found','',wikiLink,sentenceThatContainHeightKeyword,''])
                         # print(count,chalk.red('tokens matched in'),plantName,'\n')
 
-    
     if(foundHeight == False):
         print(chalk.red("No Height for "),plantName)   
         with open('plantHeightData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'not found','','not found','',wikiLink,''])           
+            writer.writerow([plantName,category,'x','x','x','x','x','x','x','x','x','x','x',wikiLink,'x'])           
 
 def findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     sunlightFound = False
@@ -362,10 +402,11 @@ def removeAlphabets(str):
     result = result.replace('Y','')
     result = result.replace('Z','')
     return result
+
 def clearFiles():
     with open('plantHeightData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+        writer.writerow(["Plantname","Category","Unit","Value 1","Value 2","Value 3","Value 4","Value 5","Value 6","Value 7","Value 8","Value 9","Value 10","Wiki link","Evidence (Source text/Sentence)"])
 
     # with open('plantSunlightData.csv','w+',newline='') as csvfile:
     #     writer = csv.writer(csvfile)
@@ -386,7 +427,7 @@ def clearFiles():
 if __name__ == '__main__':
 
     clearFiles()
-    with open('plantData1.csv') as csvfile:
+    with open('plantData.csv') as csvfile:
         next(csvfile)
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
