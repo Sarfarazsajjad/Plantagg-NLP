@@ -99,6 +99,8 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                         stringData = stringData.replace("inch","in")
                         stringData = stringData.replace('–', ' ')
                         stringData = stringData.replace('to', ' ')
+                        stringData = stringData.replace(',', '')
+                        stringData = stringData.replace('1/2', '0.5')
                         
                         if stringData.find('in') > 0:
                             plant_height_data_str_in = plant_height_data_str_in + stringData
@@ -163,7 +165,7 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     except ValueError:
                         pass
 
-                    
+
                     if (len(plant_height_data_str_in) > 0):
                         temp = ['x'] * 10
                         for index,value in enumerate(plant_height_data_str_in):
@@ -173,21 +175,21 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     
                     if (len(plant_height_data_str_cm) > 0):
                         temp = ['x'] * 10
-                        for index,value in enumerate(plant_height_data_str_in):
+                        for index,value in enumerate(plant_height_data_str_cm):
                             temp[index] = value
                         
                         writer.writerow([plantName,category,'cm',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
                     
                     if (len(plant_height_data_str_ft) > 0):
                         temp = ['x'] * 10
-                        for index,value in enumerate(plant_height_data_str_in):
+                        for index,value in enumerate(plant_height_data_str_ft):
                             temp[index] = value
 
                         writer.writerow([plantName,category,'ft',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
                     
                     if (len(plant_height_data_str_m) > 0):
                         temp = ['x'] * 10
-                        for index,value in enumerate(plant_height_data_str_in):
+                        for index,value in enumerate(plant_height_data_str_m):
                             temp[index] = value
 
                         writer.writerow([plantName,category,'m',temp[0],temp[1],temp[2],temp[3],temp[4],temp[5],temp[6],temp[7],temp[8],temp[9],wikiLink,sentenceThatContainHeightKeyword])
