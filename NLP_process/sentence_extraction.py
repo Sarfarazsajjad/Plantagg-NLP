@@ -304,33 +304,38 @@ def findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                     # print(containsoilph,'\n')
                     # filterdSentence = tokenizer.tokenize(containsoilph)
                     # containsoilph = " ".join(str(x) for x in filterdSentence)
-                    # print("plant Name is :" ,plantName, containsoilph);
+                    # print("plant Name is :" ,plantName, containsoilph);   
+                    for value in containsoilph:
+                        containsoilph = containsoilph.replace('-',' ')
+                        containsoilph = containsoilph.replace('–', ' ')
+                    
+                    # print(containsoilph)
                     doc = nlp(containsoilph)
                     count = 0
+                    min = 999
+                    max = 0.0
                     for token in doc:
                         if token.like_num:
-                            next_token = doc[token.i + 1]
-                            prev_token = doc[token.i - 1]
-                            if prev_token.lower_ == "soil" or prev_token.lower_ == 'above' or prev_token.lower_ == 'below' or prev_token.lower_ == 'of' or prev_token.lower_ == 'level' or next_token.lower_ == 'level' or prev_token.lower_ == 'range' or prev_token.lower_ == 'about' or prev_token.lower_ == 'ph' or prev_token.lower_ == 'pH' or prev_token.lower_ == 'between':
-                                count += 1
-                                token_sentence = doc[prev_token.i:next_token.i + 1]
-                                # print('Height sentence',token_sentence)
-                                unit = token_sentence[len(token_sentence) - 1:len(token_sentence)]
-                                # print(unit)
-                                writer.writerow([plantName,category,unit,'',token_sentence,'',wikiLink,containsoilph,''])
+                            try:
+                                value = float(token.text)
+                                if min == 999:
+                                    min = value
+                                else:
+                                    min = value if value < min else min
+                                    
+                                max = value if value > max else max
+                            except ValueError:
+                                pass
                     
-                    if (count > 0):
-                        print(count,chalk.yellow('tokens found in'),plantName,'\n')
-                    else:
-                        writer.writerow([plantName,category,'not found','','not found','',wikiLink,containsoilph,''])
-                        print(count,chalk.red('tokens matched in'),plantName,'\n')
+                    writer.writerow([plantName,category,'pH',min,max,wikiLink,containsoilph,''])
+                    print(min,max,plantName)
 
     
     if(soilPH == False):
         print(chalk.red("No Soil pH for "),plantName)   
         with open('plantSoilphData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'not found','','not found','',wikiLink,''])
+            writer.writerow([plantName,category,'x','x','x',wikiLink,'x'])
 
 def removeAlphabets(str):
     result = str.replace('a','')
@@ -388,25 +393,25 @@ def removeAlphabets(str):
     return result
 
 def clearFiles():
-    with open('plantHeightData.csv','w+',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category","Unit","Value 1","Value 2","Value 3","Value 4","Value 5","Value 6","Value 7","Value 8","Value 9","Value 10","Wiki link","Evidence (Source text/Sentence)"])
+    # with open('plantHeightData.csv','w+',newline='') as csvfile:
+        # writer = csv.writer(csvfile)
+        # writer.writerow(["Plantname","Category","Unit","Value 1","Value 2","Value 3","Value 4","Value 5","Value 6","Value 7","Value 8","Value 9","Value 10","Wiki link","Evidence (Source text/Sentence)"])
 
     # with open('plantSunlightData.csv','w+',newline='') as csvfile:
     #     writer = csv.writer(csvfile)
     #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    # with open('plantWaterData.csv','w+',newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    with open('plantWaterData.csv','w+',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     # with open('plantSoilData.csv','w+',newline='') as csvfile:
     #     writer = csv.writer(csvfile)
     #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     # with open('plantSoilphData.csv','w+',newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+        # writer = csv.writer(csvfile)
+        # writer.writerow(["Plantname","Category", "Unit","Min",'Max',"Wiki link","Evidence (Source text/Sentence)"])
 
 if __name__ == '__main__':
 
@@ -426,11 +431,11 @@ if __name__ == '__main__':
             lemmatizedSentences = lemmitizedList(sents);
             # print(lemmatizedSentences)
 
-            findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
             # findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            # findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
             # findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
