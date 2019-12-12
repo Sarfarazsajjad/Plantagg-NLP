@@ -302,7 +302,8 @@ def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                 or word == 'loam' 
                 or word == 'Loam'
                 or word == 'clay-loam'
-                or word == 'sandy-loamy'  
+                or word == 'sandy-loamy'
+                or word == 'sandy-like'  
                 ):
                 soilFound = True
                 soilFoundInSentence = True
@@ -325,6 +326,8 @@ def findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
                 elif(word == 'sand' or word == 'Sand'):
                     soilProperty = 'sand'
                 elif(word == 'sandy' or word == 'Sand'):
+                    soilProperty = 'sand'
+                elif(word == 'sandy-like' or word == 'Sand'):
                     soilProperty = 'sand'
 
                 print('soil found for ',plantName,', soil property: ',soilProperty)
