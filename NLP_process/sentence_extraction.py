@@ -208,37 +208,72 @@ def findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
             writer.writerow([plantName,category,'x','x','x','x','x','x','x','x','x','x','x',wikiLink,'x'])           
 
 def findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
-    sunlightFound = False
-    with open('plantSunlightData.csv','a',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        for sentence in lemmatizedSentences:
-            for word in sentence:
-                if (word == 'sun' or word =='sunlight' or word == 'sunny'):
-                    sunlightFound = True
-                    print('Sunglight found in',plantName)
-                    containsunlight = " ".join(str(x) for x in sentence)
-                    filterdSentence = tokenizer.tokenize(containsunlight)
-                    containsunlight = " ".join(str(x) for x in filterdSentence)
-                    # print("Plant:" ,plantName, "sentence",containsunlight);
-                    doc = nlp(containsunlight)
-                    count = 0
-                    for token in doc:
-                        if (token.lower_ == 'sun' or token.lower_ == 'sunny' or token.lower_ == 'sunlight' or token.lower_ == 'sun s ray' or token.lower_ == 'shade'):
-                            count += 1
-                            pre_token = doc[token.i - 1]
-                            value = doc[pre_token.i:token.i + 1]
-                            writer.writerow([plantName,category,'','',value,'',wikiLink,containsunlight,''])
+    # Sun: Full Sun (6+ hours per day), Partial sun (4-6 hours per day), Partial shade (2-4 hours per day), Full shade (little or no direct sun),
+    sunFound = False
+    evidance = ''
+    sunValuesCount = 0
+    sunValues = []
+    for sentence in lemmatizedSentences:
+        sunFoundInSentence = False
+        evidanceSentence = ''
+        for index,word in enumerate(sentence):
+            if (
+                word == 'sun' 
+                or word == 'Sun'
+                or word == 'Sunny'
+                or word == 'sunny'
+                or word == 'sunlight'
+                or word == 'Sunlight'
+                or word == 'shade'
+                or word == 'Shade'
+                or word == 'Shady'
+                or word == 'shady' 
+                ):
+                print("word: ",word)
+                sunFound = True
+                sunFoundInSentence = True
+                sunValuesCount = sunValuesCount + 1
+                sunProperty = ''
+                preWord = sentence[index-1]
+                if(word == 'sun' or word == 'Sun' or word == 'sunny' or word == 'Sunny'):
+                    print('-1: ',chalk.red.bold(preWord))
+                    if(preWord == 'full' or preWord == 'fully' or preWord == 'Full' or preWord == 'Fully'
+                    or preWord == 'good' or preWord == 'Good'
+                    ):
+                        sunProperty = 'full sun'
+                    elif(preWord == 'partial' or preWord == 'partially' or preWord == 'Partial'or preWord == 'Partially'):
+                        sunProperty = 'partial sun'
+                elif(word == 'shade' or word == 'Shade' or word == 'shady' or word == 'Shady'):
+                    print('-1: ',chalk.red.bold(preWord))
+                    if(preWord == 'full' or preWord == 'fully' or preWord == 'Full' or preWord == 'Fully'
+                    or preWord == 'deep' or preWord == 'Deep'
+                    ):
+                        sunProperty = 'full shade'
+                    elif(preWord == 'partial' or preWord == 'partially' or preWord == 'Partial'or preWord == 'Partially'
+                    or preWord == 'considered' or preWord == 'Considered'
+                    or preWord == 'part' or preWord == 'Part'
+                    ):
+                        sunProperty = 'partial shade'
+                print('sun found for ',plantName,', sun property: ',sunProperty)
+                if(sunProperty != ''):
+                    sunValues.append(sunProperty)
+                
+        if(sunFoundInSentence == True):
+            evidanceSentence = " ".join(str(x) for x in sentence)
+            # print("Plant:" ,plantName, ", sentence:",evidanceSentence)
+            evidance = evidance + ', ' + evidanceSentence
 
-                    if (count > 0):
-                        print(count,chalk.yellow('sunlight tokens found in'),plantName,'\n')
-                    else:
-                        writer.writerow([plantName,category,'not found','','not found','',wikiLink,containsunlight,''])
-                        print(count,chalk.red('sunlight tokens matched in'),plantName,'\n')
-
-    if(sunlightFound == False):
+    if(sunFound == True):
+        # print('evidance: ',evidance)
         with open('plantSunlightData.csv','a',newline='') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow([plantName,category,'','','','',wikiLink,'']) 
+            writer.writerow([plantName,category,'','',','.join(str(x) for x in set(sunValues)),'',wikiLink,evidance,""])
+    if(sunFound == False):
+        # print(chalk.red.bold(evidance))
+        with open('plantSunlightData.csv','a',newline='') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([plantName,category,'','','','',wikiLink,''])
+    return sunValuesCount
 
 def findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink):
     waterFound = False
@@ -457,17 +492,17 @@ def clearFiles():
         # writer = csv.writer(csvfile)
         # writer.writerow(["Plantname","Category","Unit","Value 1","Value 2","Value 3","Value 4","Value 5","Value 6","Value 7","Value 8","Value 9","Value 10","Wiki link","Evidence (Source text/Sentence)"])
 
-    # with open('plantSunlightData.csv','w+',newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    with open('plantSunlightData.csv','w+',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     # with open('plantWaterData.csv','w+',newline='') as csvfile:
     #     writer = csv.writer(csvfile)
     #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    with open('plantSoilData.csv','w+',newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    # with open('plantSoilData.csv','w+',newline='') as csvfile:
+    #     writer = csv.writer(csvfile)
+    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     # with open('plantSoilphData.csv','w+',newline='') as csvfile:
     #     writer = csv.writer(csvfile)
@@ -477,6 +512,8 @@ if __name__ == '__main__':
 
     clearFiles()
     soilValuesCount = 0
+    sunOrShadeValuesCount = 0
+    dryMoistWetValuesCount = 0
     with open('plantData.csv') as csvfile:
         next(csvfile)
         readCSV = csv.reader(csvfile, delimiter=',')
@@ -494,12 +531,15 @@ if __name__ == '__main__':
 
             # findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            # findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
-
+# Sun: Full Sun (6+ hours per day), Partial sun (4-6 hours per day), Partial shade (2-4 hours per day), Full shade (little or no direct sun),
+            sentenceSunOrShadeValueCount = findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            sunOrShadeValuesCount = sunOrShadeValuesCount + sentenceSunOrShadeValueCount
+# Water: Dry, moist, wet
             # findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            sentenceSoilValueCount = findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
-            soilValuesCount = soilValuesCount + sentenceSoilValueCount
+            # sentenceSoilValueCount = findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            # soilValuesCount = soilValuesCount + sentenceSoilValueCount
             # findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
         print(chalk.red.bold('total soil values: '),soilValuesCount)
+        print(chalk.red.bold('total sun values: '),sunOrShadeValuesCount)
