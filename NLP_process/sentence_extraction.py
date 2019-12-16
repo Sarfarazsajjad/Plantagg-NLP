@@ -397,21 +397,21 @@ def clearFiles():
         # writer = csv.writer(csvfile)
         # writer.writerow(["Plantname","Category","Unit","Value 1","Value 2","Value 3","Value 4","Value 5","Value 6","Value 7","Value 8","Value 9","Value 10","Wiki link","Evidence (Source text/Sentence)"])
 
-    # with open('plantSunlightData.csv','w+',newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    with open('plantSunlightData.csv','w+',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
     with open('plantWaterData.csv','w+',newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    # with open('plantSoilData.csv','w+',newline='') as csvfile:
-    #     writer = csv.writer(csvfile)
-    #     writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
+    with open('plantSoilData.csv','w+',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Category", "Unit",'Unit Verified',"Value",'Value Verified',"Wiki link","Evidence (Source text/Sentence)"])
 
-    # with open('plantSoilphData.csv','w+',newline='') as csvfile:
-        # writer = csv.writer(csvfile)
-        # writer.writerow(["Plantname","Category", "Unit","Min",'Max',"Wiki link","Evidence (Source text/Sentence)"])
+    with open('plantSoilphData.csv','w+',newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Plantname","Category", "Unit","Min",'Max',"Wiki link","Evidence (Source text/Sentence)"])
 
 if __name__ == '__main__':
 
@@ -433,10 +433,10 @@ if __name__ == '__main__':
 
             # findHeightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            # findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            findSunlightWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
             findWaterWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            # findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            findSoilWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
 
-            # findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
+            findSoilphWordInSentences(lemmatizedSentences,plantName,category,wikiLink)
