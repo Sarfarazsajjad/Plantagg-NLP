@@ -3,6 +3,7 @@ import csv
 from bs4 import BeautifulSoup
 from simple_chalk import chalk
 import time
+import re
 
 with open('mgb-data.csv','r',newline='') as inputCSV:
   next(inputCSV)
@@ -36,5 +37,17 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
     # plant_bloom_leaf = soup.find(id="")
     # plant_bloom_other = soup.find(id="")
     # plant_bloom_tolerate = soup.find(id="")
-
+    print(plant_data)
+    temp = []
+    for element in plant_data:
+      text = soup.find('div',{'class','row'})
+      if(text):
+        temp.append(text.text)
+    
+    
+    line = temp[0].splitlines()
+    for element in line:
+      if element:
+        cleaned = re.sub(' +', ' ',element)
+        print(chalk.magenta.bold(cleaned.split(':')))
   
