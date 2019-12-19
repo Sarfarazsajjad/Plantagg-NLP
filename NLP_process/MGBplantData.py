@@ -7,7 +7,7 @@ import re
 
 with open('MGBPlantDatafinal.csv','w+',newline='') as csvfile:
   writer = csv.writer(csvfile)
-  writer.writerow(['Plant url','common name','Botanical name','type','family','native range','zone','height' ,'Spread','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses'])
+  writer.writerow(['Plant url','Common name','Botanical name','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses'])
 
 with open('mgb-data.csv','r',newline='') as inputCSV:
   next(inputCSV)
@@ -23,8 +23,16 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
     Family = ''
     NativeRange = ''
     Zone = ''
+    ZoneLow = ''
+    ZoneHigh = ''
     Height = ''
+    HeightLow = ''
+    HeightHigh = ''
+    HeightUnit = ''
     Spread = ''
+    SpreadLow = ''
+    SpreadHigh = ''
+    SpreadUnit = ''
     BloomTime = ''
     BloomDescription = ''
     Sun = ''
@@ -74,10 +82,23 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
             NativeRange  = splited[1]
           if splited[0].strip() == 'Zone':
             Zone = splited[1]
+            zoneSplit = Zone.split('to')
+            ZoneLow = zoneSplit[0]
+            ZoneHigh = zoneSplit[1]
           if splited[0].strip() == 'Height':
             Height = splited[1]
+            heightSplit = Height.split('to')
+            HeightLow = heightSplit[0]
+            removeFeet = heightSplit[1].split()
+            HeightHigh = removeFeet[0]
+            HeightUnit = removeFeet[1]
           if splited[0].strip() == 'Spread':
             Spread = splited[1]
+            SpreadSplit = Spread.split('to')
+            SpreadLow = SpreadSplit[0]
+            removeFeet = SpreadSplit[1].split()
+            SpreadHigh = removeFeet[0]
+            SpreadUnit = removeFeet[1]
           if splited[0].strip() == 'Bloom Time':
             BloomTime  = splited[1]
           if splited[0].strip() == 'Bloom Description':
@@ -145,8 +166,16 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
         Family,
         NativeRange,
         Zone,
+        ZoneLow,
+        ZoneHigh,
         Height,
+        HeightLow,
+        HeightHigh,
+        HeightUnit,
         Spread,
+        SpreadLow,
+        SpreadHigh,
+        SpreadUnit,
         BloomTime,
         BloomDescription,
         Sun,
