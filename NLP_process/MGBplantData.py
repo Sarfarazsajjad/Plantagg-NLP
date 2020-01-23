@@ -53,9 +53,13 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
     # print(chalk.yellow(botanical_name))
     # print(chalk.green(planturl))
     time.sleep(0.5)
-    r = requests.get(planturl)
-    soup = BeautifulSoup(r.text,'html.parser')
-    plant_data = soup.find('div',{'class','column-right'})
+    if planturl == "not found":
+      print("not found")
+      pass
+    else:
+      r = requests.get(planturl)
+      soup = BeautifulSoup(r.text,'html.parser')
+      plant_data = soup.find('div',{'class','column-right'})
 
     for element in plant_data:
       row = soup.find('div',{'class','row'})
@@ -157,42 +161,81 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
     # print(chalk.green.bold(plant_properties),'\n')
     # print(len(plant_properties))    
     with open('MGBPlantDatafinal.csv','a',newline='') as outputCSV:
-      writer = csv.writer(outputCSV)
-      writer.writerow([
-        planturl,
-        common_name,
-        botanical_name,
-        Type,
-        Family,
-        NativeRange,
-        Zone,
-        ZoneLow,
-        ZoneHigh,
-        Height,
-        HeightLow,
-        HeightHigh,
-        HeightUnit,
-        Spread,
-        SpreadLow,
-        SpreadHigh,
-        SpreadUnit,
-        BloomTime,
-        BloomDescription,
-        Sun,
-        Water,
-        Maintenance,
-        SuggestedUse,
-        Flower,
-        Attracts,
-        Fruit,
-        Leaf,
-        Other,
-        Tolerate,
-        Culture,
-        NoteworthyCharacteristics,
-        Problems,GardenUses,
-        ''
-        ])
-      print(chalk.green.bold(common_name),' saved')
+        writer = csv.writer(outputCSV)
+        if planturl == "not found":
+          writer.writerow([
+            planturl,
+            common_name,
+            botanical_name,
+            Type,
+            Family,
+            NativeRange,
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            'x',
+            ''
+            ])
+          print(chalk.green.bold(common_name),' saved')
+        else:  
+          writer.writerow([
+            planturl,
+            common_name,
+            botanical_name,
+            Type,
+            Family,
+            NativeRange,
+            Zone,
+            ZoneLow,
+            ZoneHigh,
+            Height,
+            HeightLow,
+            HeightHigh,
+            HeightUnit,
+            Spread,
+            SpreadLow,
+            SpreadHigh,
+            SpreadUnit,
+            BloomTime,
+            BloomDescription,
+            Sun,
+            Water,
+            Maintenance,
+            SuggestedUse,
+            Flower,
+            Attracts,
+            Fruit,
+            Leaf,
+            Other,
+            Tolerate,
+            Culture,
+            NoteworthyCharacteristics,
+            Problems,GardenUses,
+            ''
+            ])
+          print(chalk.green.bold(common_name),' saved')
       
 
