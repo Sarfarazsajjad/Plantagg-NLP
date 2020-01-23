@@ -11,9 +11,9 @@ with open('mgb-master.csv','r',newline='') as csvfile:
   readCSV = csv.reader(csvfile, delimiter=',')
   # print(readCSV)
   # use with care
-  with open('mgb-data.csv','w+',newline='') as csvfile:
-    writer = csv.writer(csvfile)
-    writer.writerow(["Wiki link","common name", "botanical name",'status',"common name worked",'botanical name worked',"both worked",'search result url','missouribotanicalgarden url','page data'])
+  # with open('mgb-data.csv','w+',newline='') as csvfile:
+    # writer = csv.writer(csvfile)
+    # writer.writerow(["Wiki link","common name", "botanical name",'status',"common name worked",'botanical name worked',"both worked",'search result url','missouribotanicalgarden url','page data'])
   
   for row in readCSV:
     common_not_found = 0
@@ -92,5 +92,5 @@ with open('mgb-master.csv','r',newline='') as csvfile:
       if (common_not_found == 0 or botanical_not_found == 0):
         writer.writerow(['',common_name,botanical_name,status,common_found,botanical_found,both_found,r.url,'http://www.missouribotanicalgarden.org/'+plant_seach_link,''])
       else:
-        print(chalk.magenta("working"))
+        print(chalk.magenta("Plant was not found on MGB site"))
         writer.writerow(['',common_name,botanical_name,status,common_found,botanical_found,both_found,r.url,'not found',''])
