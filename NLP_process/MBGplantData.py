@@ -5,20 +5,20 @@ from simple_chalk import chalk
 import time
 import re
 
-with open('MGBPlantDatafinal.csv','w+',newline='') as csvfile:
+with open('MBGPlantDatafinal.csv','w+',newline='') as csvfile:
   writer = csv.writer(csvfile)
-  writer.writerow(['Plant url','Common name','Botanical name','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses'])
+  writer.writerow(['Plant url','Common name','Common Name - MBG','Botanical name','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses'])
 
-with open('mgb-data.csv','r',newline='') as inputCSV:
+with open('mbg-data.csv','r',newline='') as inputCSV:
   next(inputCSV)
   readCSV = csv.reader(inputCSV, delimiter=',')
   for data in readCSV:
     plant_properties = []
     rowText = []
-    common_name = data[1]
+    commonNameOriginal = data[1]
+    CommonNameMBG = ''
     botanical_name = data[2]
     planturl = data[8]
-    CommonName = ''
     Type = ''
     Family = ''
     NativeRange = ''
@@ -77,7 +77,7 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
         if len(splited) > 1:
           # plant_properties.append(splited[1])
           if(splited[0].strip() == 'Common Name'):
-            commonName = splited[1]
+            CommonNameMGB = splited[1]
           if(splited[0].strip() == 'Type'):
             Type = splited[1]
           if(splited[0].strip() == 'Family'):
@@ -160,12 +160,13 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
     
     # print(chalk.green.bold(plant_properties),'\n')
     # print(len(plant_properties))    
-    with open('MGBPlantDatafinal.csv','a',newline='') as outputCSV:
+    with open('MBGPlantDatafinal.csv','a',newline='') as outputCSV:
         writer = csv.writer(outputCSV)
         if planturl == "not found":
           writer.writerow([
             planturl,
-            common_name,
+            commonNameOriginal,
+            'x',
             botanical_name,
             'x',
             'x',
@@ -199,11 +200,12 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
             'x',
             ''
             ])
-          print(chalk.green.bold(common_name),' saved')
+          print(chalk.green.bold(commonNameOriginal),' saved')
         else:  
           writer.writerow([
             planturl,
-            common_name,
+            commonNameOriginal,
+            CommonNameMBG,
             botanical_name,
             Type,
             Family,
@@ -236,6 +238,6 @@ with open('mgb-data.csv','r',newline='') as inputCSV:
             Problems,GardenUses,
             ''
             ])
-          print(chalk.green.bold(common_name),' saved')
+          print(chalk.green.bold(commonNameOriginal),' saved')
       
 

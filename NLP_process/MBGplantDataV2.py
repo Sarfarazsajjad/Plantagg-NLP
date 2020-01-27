@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from simple_chalk import chalk
 
 headerRow = []
-with open('MGBPlantDatafinal.csv','r',newline='') as csvfile:
+with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
   reader = csv.reader(csvfile, delimiter=',')
   headerRow = next(csvfile)
   headerRow += ','
@@ -83,7 +83,7 @@ with open('MGBPlantDatafinal.csv','r',newline='') as csvfile:
       else:
         print(chalk.red('nothing found'),data[1])
 
-    with open('MGBPlantDataV2.csv','a',newline='') as csvfile:
+    with open('MBGPlantDataV2.csv','a',newline='') as csvfile:
       writer = csv.writer(csvfile)
       writer.writerow([
         data[0],

@@ -6,7 +6,7 @@ from simple_chalk import chalk
 
 plant_seach_link = ''
 
-with open('mgb-master.csv','r',newline='') as csvfile:
+with open('mbg-master.csv','r',newline='') as csvfile:
   next(csvfile)
   readCSV = csv.reader(csvfile, delimiter=',')
   # print(readCSV)
@@ -85,7 +85,7 @@ with open('mgb-master.csv','r',newline='') as csvfile:
       common_found = 0
       status = 0
     
-    with open('mgb-data.csv','a') as writeFile:
+    with open('mbg-data.csv','a') as writeFile:
       writer = csv.writer(writeFile)
       print(common_not_found)
       print(botanical_not_found)
