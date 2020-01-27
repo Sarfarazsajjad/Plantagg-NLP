@@ -77,7 +77,7 @@ with open('mbg-data.csv','r',newline='') as inputCSV:
         if len(splited) > 1:
           # plant_properties.append(splited[1])
           if(splited[0].strip() == 'Common Name'):
-            CommonNameMGB = splited[1]
+            CommonNameMBG = splited[1]
           if(splited[0].strip() == 'Type'):
             Type = splited[1]
           if(splited[0].strip() == 'Family'):

@@ -13,7 +13,7 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
 
   
   for data in reader:
-    attracts = data[24]
+    attracts = data[25]
     attracts_elements = attracts.split(',')
     Hummingbirds = 0
     Butterflies = 0
@@ -48,7 +48,7 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
       else:
         print(chalk.red('nothing found'),data[1])
     
-    tolerate = data[28]
+    tolerate = data[29]
     tolerate_elements = tolerate.split(',')
     for ele in tolerate_elements:
       cleaned = ele.strip()
@@ -110,15 +110,16 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
         data[21],
         data[22],
         data[23],
+        data[24],
         attracts,
-        data[25],
         data[26],
         data[27],
+        data[28],
         tolerate,
-        data[29],
         data[30],
         data[31],
         data[32],
+        data[33],
         Hummingbirds,
         Butterflies,
         Birds,
