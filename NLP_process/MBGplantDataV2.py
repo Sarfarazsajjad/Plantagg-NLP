@@ -3,17 +3,33 @@ from bs4 import BeautifulSoup
 from simple_chalk import chalk
 
 headerRow = []
+
+# use when update common name based data
+# with open('MBGCommonNamesV2.csv','w+',newline='') as csvfile:
+    # writer = csv.writer(csvfile)
+    # writer.writerow(['Plant url','Common name','Common Name - MBG','Botanical name','Botanical Name - MBG','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses','Hummingbirds','Butterflies','Birds','Erosion','Rabbit','Black Walnut','Drought','Clay Soil','Deer','Dry Soil','Shallow-Rocky Soil','Heavy Shade','Wet Soil','Air Pollution',])
+  
+
+# use when updating botanical name based data
+# with open('MBGBotanicalNamesV2.csv','w+',newline='') as csvfile:
+    # writer = csv.writer(csvfile)
+    # writer.writerow(['Plant url','Common name','Common Name - MBG','Botanical name','Botanical Name - MBG','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses','Hummingbirds','Butterflies','Birds','Erosion','Rabbit','Black Walnut','Drought','Clay Soil','Deer','Dry Soil','Shallow-Rocky Soil','Heavy Shade','Wet Soil','Air Pollution',])
+  
+
+# with open('MBGBotanicalNames.csv','r',newline='') as csvfile:
+# with open('MBGCommonNames.csv','r',newline='') as csvfile:
 with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
+  
   reader = csv.reader(csvfile, delimiter=',')
   headerRow = next(csvfile)
-  headerRow += ','
-  print(headerRow)
+  # headerRow += ','
+  # print(headerRow)
   attractsUnique = []
   tolerateUnique = []
 
   
   for data in reader:
-    attracts = data[25]
+    attracts = data[26]
     attracts_elements = attracts.split(',')
     Hummingbirds = 0
     Butterflies = 0
@@ -48,7 +64,7 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
       else:
         print(chalk.red('nothing found'),data[1])
     
-    tolerate = data[29]
+    tolerate = data[30]
     tolerate_elements = tolerate.split(',')
     for ele in tolerate_elements:
       cleaned = ele.strip()
@@ -83,6 +99,8 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
       else:
         print(chalk.red('nothing found'),data[1])
 
+    # with open('MBGBotanicalNamesV2.csv','a',newline='') as csvfile:
+    # with open('MBGCommonNamesV2.csv','a',newline='') as csvfile:
     with open('MBGPlantDataV2.csv','a',newline='') as csvfile:
       writer = csv.writer(csvfile)
       writer.writerow([
@@ -111,15 +129,16 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
         data[22],
         data[23],
         data[24],
+        data[25],
         attracts,
-        data[26],
         data[27],
         data[28],
-        tolerate,
+        data[29],
         data[30],
         data[31],
         data[32],
         data[33],
+        data[34],
         Hummingbirds,
         Butterflies,
         Birds,
