@@ -17,3 +17,12 @@ For data captured and sanitized from MBG plant site flow goes as follows:
 2. Then run MBGplantData.py in which plant URLs from previously populated mbg-data.csv is read and transformed plant data is written in MBGPlantDatafinal.csv
 
 3. Then run MBGplantDataV2.py in which previously populated MBGPlantDatafinal.csv is read and transformed data is written in MBGPlantDataV2.csv
+
+4. To run the above process for plants based on common names only run MBGCommonNames.py which will populate data in MBGCommonNames.csv and then based on file name uncomment code in MBGplantDataV2.py accordingly
+
+5. To run the above process for plants based on common names only run MBGBotanicalNames.py which will populate data in MBGBotanicalNames.csv and then based on file name uncomment code in MBGplantDataV2.py accordingly
+
+6. Data from point 4 and 5 are found in files MBGCommonNamesV2.csv and MBGBotanicalNamesV2.csv
+
+
+Please keep this file updated in the future...
