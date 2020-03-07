@@ -68,11 +68,11 @@ with open('MBGPlantDatafinal.csv','r',newline='') as csvfile:
     tolerate_elements = tolerate.split(',')
     for ele in tolerate_elements:
       cleaned = ele.strip()
-      if cleaned in tolerateUnique:
-        pass
-      else:
-        if cleaned != '':
-          tolerateUnique.append(cleaned)
+      # if cleaned in tolerateUnique:
+      #   pass
+      # else:
+      #   if cleaned != '':
+      #     tolerateUnique.append(cleaned)
 
       if cleaned == 'Erosion':
         Erosion = 1
