@@ -2,13 +2,20 @@ For setting up this project please make sure you have a virutal env setup
 
 This project use python verison 3.8.0
 
-Once python virtual env is setup 
+
+For mac setup run the following from terminal
+1. brew install pyenv
+2. pyenv install 3.8.0
+3. pyenv global 3.8.0
+4. pyenv exec python -m venv venv3.8.0
+5. source venv3.8.0/bin/activate
+6. python --version to see 3.8.0
+
+Once python virtual env is setup install project dependencies 
 
 pip install -r requirements.txt 
 
-This will install all the project dependecies
-
-Then navigate to folder NLP_Process
+Then navigate to folder NLP_Process and ignore other code..
 
 For data captured and sanitized from MBG plant site flow goes as follows:
 
