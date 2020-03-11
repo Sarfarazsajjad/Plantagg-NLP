@@ -12,9 +12,9 @@ with open('data-1.csv','r',newline='') as csvfile:
   readCSV = csv.reader(csvfile, delimiter=',')
 
   # clear the existing file data and add header row
-  # with open('MBGBotanicalNames.csv','w+',newline='') as csvfile:
-    # writer = csv.writer(csvfile)
-    # writer.writerow(['Plant url','Common name','Common Name - MBG','Botanical name','Botanical Name - MBG','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses','Hummingbirds','Butterflies','Birds','Erosion','Rabbit','Black Walnut','Drought','Clay Soil','Deer','Dry Soil','Shallow-Rocky Soil','Heavy Shade','Wet Soil','Air Pollution',])
+  with open('MBGBotanicalNames-output.csv','w+',newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(['Plant url','Common name','Common Name - MBG','Botanical name','Botanical Name - MBG','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses','Hummingbirds','Butterflies','Birds','Erosion','Rabbit','Black Walnut','Drought','Clay Soil','Deer','Dry Soil','Shallow-Rocky Soil','Heavy Shade','Wet Soil','Air Pollution',])
   
   for data in readCSV:
     plant_properties = []
