@@ -4,10 +4,16 @@ from bs4 import BeautifulSoup
 import time
 from simple_chalk import chalk
 import re
-
+# data has been covered till data-5.csv
 siteURL = 'http://www.missouribotanicalgarden.org/'
 
-fileNames = ["data-2.csv"]
+fileNames = [
+  # "data-1.csv",
+  # "data-2.csv",
+  # "data-3.csv",
+  # "data-4.csv",
+  # "data-5.csv",
+  ]
 
 for running in fileNames:
     print(running)
