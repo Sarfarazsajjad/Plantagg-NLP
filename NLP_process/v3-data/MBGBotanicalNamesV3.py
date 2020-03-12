@@ -82,7 +82,6 @@ with open('data-1.csv','r',newline='') as csvfile:
             '0',  # family
             '0',  # native range
             '0',  # zone
-            '0',  # zone 
             '0',  # zone low
             '0',  # zone high
             '0',  # height
