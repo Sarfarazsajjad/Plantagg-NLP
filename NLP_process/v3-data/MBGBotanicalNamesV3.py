@@ -7,11 +7,11 @@ import re
 
 siteURL = 'http://www.missouribotanicalgarden.org/'
 
-fileNames = ["data-1.csv"]
+fileNames = ["data-2.csv"]
 
 for running in fileNames:
     print(running)
-    with open('data-1.csv','r',newline='') as csvfile:
+    with open(running,'r',newline='') as csvfile:
       next(csvfile) #skip the header row
       readCSV = csv.reader(csvfile, delimiter=',')
 
