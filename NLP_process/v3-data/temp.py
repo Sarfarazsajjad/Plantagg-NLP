@@ -82,7 +82,7 @@ for running in fileNames:
                         print(chalk.magenta("Plant was not found on MGB site"))
                         writer.writerow(
                         ['Not found',
-                        '0',
+                        '0',  #common Name original
                         '0',  # Common Name - MGB
                         botanicalName,
                         '0',  # Botanical Name - MGB
@@ -90,7 +90,6 @@ for running in fileNames:
                         '0',  # family
                         '0',  # native range
                         '0',  # zone
-                        '0',  # zone 
                         '0',  # zone low
                         '0',  # zone high
                         '0',  # height
