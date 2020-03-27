@@ -32,4 +32,10 @@ For data captured and sanitized from MBG plant site flow goes as follows:
 6. Data from point 4 and 5 are found in files MBGCommonNamesV2.csv and MBGBotanicalNamesV2.csv
 
 
+7. Made v3-data folder that beaks down master file of 34k records in to 250 records each with data-<1-181> so that extracting data would be easy in case of loss of connection.
+
+8. Total of only 2k plants were found from the provided list of 34k Plants please run  
+
+
+
 Please keep this file updated in the future...
