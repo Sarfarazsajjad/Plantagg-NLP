@@ -9,7 +9,11 @@ import re
 # navigate to the blank search 
 # once for 1336 times
 # pick urls of plants and save in MBGPlantSiteUrls.csv
-
+# clear the existing file data and add header row
+with open('MBGPlantSiteUrls.csv','w+',newline='') as csvfile:
+  writer = csv.writer(csvfile)
+  writer.writerow(['MGB Plant Url'])
+  
 mainPlantsPage = 'https://www.missouribotanicalgarden.org/PlantFinder/PlantFinderProfileResults.aspx'
 
 # its n-1 at the end
@@ -71,7 +75,6 @@ for plant in range(1):
     plantDetailURLs.append(completePlantUrl)
 
   for x in plantDetailURLs:
-    print(x)
     with open('MBGPlantSiteUrls.csv','a') as writeFile:
         writer = csv.writer(writeFile)
         writer.writerow([x])
