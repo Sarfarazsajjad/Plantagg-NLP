@@ -55,6 +55,7 @@ with open('MGBSitePlantUrls.csv','r',newline='') as csvfile:
     r = requests.get(plantUrl[0])
     soup = BeautifulSoup(r.text,'html.parser')
     botanicalNameSpan = soup.find(id="dnn_srTitle_lblTitle")
+    botanicalName = botanicalNameSpan.text
     print(chalk.cyan.bold(botanicalNameSpan.text))
     plant_data = soup.find('div',{'class','column-right'})
 
@@ -74,7 +75,7 @@ with open('MGBSitePlantUrls.csv','r',newline='') as csvfile:
             if len(splited) > 1:
               # plant_properties.append(splited[1])
               if(splited[0].strip() == 'Common Name'):
-                CommonNameMBG = splited[1]
+                commonName = splited[1]
               if(splited[0].strip() == 'Type'):
                 Type = splited[1]
               if(splited[0].strip() == 'Family'):
@@ -150,40 +151,40 @@ with open('MGBSitePlantUrls.csv','r',newline='') as csvfile:
         else:
           GardenUses = ''
 
-  with open('MBGSitePlantData.csv','a') as writeFile:
-    writer = csv.writer(writeFile)
-    writer.writerow([
-      plantUrl,
-      commonName,
-      botanicalName,
-      Type,
-      Family,
-      NativeRange,
-      Zone,
-      ZoneLow,
-      ZoneHigh,
-      Height,
-      HeightLow,
-      HeightHigh,
-      HeightUnit,
-      Spread,
-      SpreadLow,
-      SpreadHigh,
-      SpreadUnit,
-      BloomTime,
-      BloomDescription,
-      Sun,
-      Water,
-      Maintenance,
-      SuggestedUse,
-      Flower,
-      Attracts,
-      Fruit,
-      Leaf,
-      Other,
-      Tolerate,
-      Culture,
-      NoteworthyCharacteristics,
-      Problems,
-      GardenUses,
-      ''])
+    with open('MBGSitePlantData.csv','a') as writeFile:
+      writer = csv.writer(writeFile)
+      writer.writerow([
+        plantUrl[0],
+        commonName,
+        botanicalName,
+        Type,
+        Family,
+        NativeRange,
+        Zone,
+        ZoneLow,
+        ZoneHigh,
+        Height,
+        HeightLow,
+        HeightHigh,
+        HeightUnit,
+        Spread,
+        SpreadLow,
+        SpreadHigh,
+        SpreadUnit,
+        BloomTime,
+        BloomDescription,
+        Sun,
+        Water,
+        Maintenance,
+        SuggestedUse,
+        Flower,
+        Attracts,
+        Fruit,
+        Leaf,
+        Other,
+        Tolerate,
+        Culture,
+        NoteworthyCharacteristics,
+        Problems,
+        GardenUses,
+        ''])
