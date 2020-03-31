@@ -7,9 +7,9 @@ import csv
 import re
 
 # clear the existing file data and add header row
-with open('MBGSitePlantData.csv','w+',newline='') as csvfile:
-  writer = csv.writer(csvfile)
-  writer.writerow(['Plant url MBG','Common Name','Botanical Name','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses','Hummingbirds','Butterflies','Birds','Erosion','Rabbit','Black Walnut','Drought','Clay Soil','Deer','Dry Soil','Shallow-Rocky Soil','Heavy Shade','Wet Soil','Air Pollution',])
+# with open('MBGSitePlantData.csv','w+',newline='') as csvfile:
+  # writer = csv.writer(csvfile)
+  # writer.writerow(['Plant url MBG','Common Name','Botanical Name','Type','Family','Native range','Zone','Zone low','Zone high','Height','Height low','Height high','Unit','Spread','Spread low','Spread high','Unit','Bloom Time','Bloom Description','Sun','Water','Maintenance','Suggested Use','Flower','Attracts','Fruit','Leaf','Other','Tolerate','Culture','Noteworthy characteristics','Problems','Garden uses','Hummingbirds','Butterflies','Birds','Erosion','Rabbit','Black Walnut','Drought','Clay Soil','Deer','Dry Soil','Shallow-Rocky Soil','Heavy Shade','Wet Soil','Air Pollution',])
 
 with open('MGBSitePlantUrls.csv','r',newline='') as csvfile:
   next(csvfile)
@@ -85,8 +85,12 @@ with open('MGBSitePlantUrls.csv','r',newline='') as csvfile:
               if splited[0].strip() == 'Zone':
                 Zone = splited[1]
                 zoneSplit = Zone.split('to')
-                ZoneLow = zoneSplit[0]
-                ZoneHigh = zoneSplit[1]
+                if len(zoneSplit) > 1:
+                  ZoneLow = zoneSplit[0]
+                  ZoneHigh = zoneSplit[1]
+                else:
+                  ZoneLow = zoneSplit[0]
+                  ZoneHigh = zoneSplit[0]
               if splited[0].strip() == 'Height':
                 Height = splited[1]
                 heightSplit = Height.split('to')
