@@ -3,9 +3,9 @@ import wikipedia as wikipedia
 import csv
 # %%
 # prepare csv header
-# with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
-#             writer = csv.writer(writeFile)
-#             writer.writerow(['Botanical Name','Expected Common Name','Wikipedia Page link','Image urls'])
+with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
+            writer = csv.writer(writeFile)
+            writer.writerow(['Botanical Name','Expected Common Name','Wikipedia Page link','Image urls'])
 # %%
 # fetch wikipedia data
 with open('plant_botanical_names.txt','r') as file:
@@ -26,7 +26,3 @@ with open('plant_botanical_names.txt','r') as file:
                 writer.writerow([plantName,'not found','not found','not found'])
             print('##### not found #####')
             continue
-
-
-
-# %%
