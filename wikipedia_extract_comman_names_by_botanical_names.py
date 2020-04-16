@@ -1,12 +1,16 @@
 # %%
 import wikipedia as wikipedia
-
+import csv
 # %%
 with open('plant_botanical_names.txt','r') as file:
-    for lines in file:
+    for line in file:
+        print(line)
 # %%
-        print(lines)
-
+        pageObject = wikipedia.page(line)
+        pageHtml = wikipedia.page(line).html()
+        with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
+            writer = csv.writer(writeFile)
+            writer.writerow([line.replace("\n", ""),pageObject.title,pageObject.url," ".join(str(x) for x in pageObject.images)])
 
 
 # %%
