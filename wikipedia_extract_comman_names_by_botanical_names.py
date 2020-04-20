@@ -10,20 +10,24 @@ with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
 # fetch wikipedia data
 with open('plant_botanical_names.txt','r') as file:
     for line in file:
+        line = file.readline()
         plantName = line.replace("\n", "")
         print(str(plantName))
-        # %%
         try:
             pageObject = wikipedia.page(plantName)
             pageHtml = wikipedia.page(plantName).html()
-            with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
+            soup = BeautifulSoup(pageHtml)
+            common_names_string = extract_common_names(soup)
+            print('common names: ' + common_names_string)
+            
+            with open('wikipedia_plant_common_name_by_botanical_names.csv','a') as writeFile:
                 writer = csv.writer(writeFile)
-                writer.writerow([plantName,pageObject.title,pageObject.url," ".join(str(x) for x in pageObject.images)])
+                writer.writerow([plantName,pageObject.title,common_names_string,pageObject.url," ".join(str(x) for x in pageObject.images)])
         except:
             #if a "PageError" was raised, ignore it and continue to next link
-            with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
+            with open('wikipedia_plant_common_name_by_botanical_names.csv','a') as writeFile:
                 writer = csv.writer(writeFile)
-                writer.writerow([plantName,'not found','not found','not found'])
+                writer.writerow([plantName,'not found','not found','not found','not found'])
             print('##### not found #####')
             continue
 # %%
