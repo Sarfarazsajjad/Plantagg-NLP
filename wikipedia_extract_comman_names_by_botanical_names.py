@@ -10,7 +10,6 @@ with open('wikipedia_pages_by_plant_botanical_names.csv','a') as writeFile:
 # fetch wikipedia data
 with open('plant_botanical_names.txt','r') as file:
     for line in file:
-        line = file.readline()
         plantName = line.replace("\n", "")
         print(str(plantName))
         try:
