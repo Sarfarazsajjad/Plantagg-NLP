@@ -3,6 +3,7 @@ data/
 .idea/
 __pycache__/
 lines.html
-vscode/
+.vscode
 env_3.8.0
 env_3.7.0
+settings.json
